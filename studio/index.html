@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free AI Video Studio: headline to script, voiceover and video</title>
+<meta name="description" content="Free browser tool: turn a headline into a news script, an AI voiceover and a captioned vertical video with your own Gemini API key.">
+<link rel="canonical" href="https://terryje-y.github.io/studio/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#7c3aed">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Free AI Video Studio: headline to script, voiceover and video">
+<meta property="og:description" content="Free browser tool: turn a headline into a news script, an AI voiceover and a captioned vertical video with your own Gemini API key.">
+<meta property="og:url" content="https://terryje-y.github.io/studio/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg?v=4664b1b908" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/static/fonts/PlusJakartaSans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=4664b1b908">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "AI Video Studio", "applicationCategory": "MultimediaApplication", "operatingSystem": "Any (web browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "url": "https://terryje-y.github.io/studio/"}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg?v=4664b1b908" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav id="nav" class="nav" aria-label="Main">
+      <a href="/start-here/" >Start here</a>
+      <div class="dd">
+        <button type="button" aria-haspopup="true">Guides <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
+          <a href="/category/creator-guides/"><b>Creator Guides</b><span>Beginner-friendly. No coding needed.</span></a><a href="/category/ai-news-automation/"><b>AI News Automation</b><span>How AI researches, writes and voices news videos.</span></a><a href="/category/video-editing/"><b>Video Editing</b><span>Montages, captions, pacing and visual storytelling.</span></a><a href="/category/ai-tools/"><b>AI Tools</b><span>Honest reviews of AI models and creator tools.</span></a><a href="/category/tutorials/"><b>Tutorials</b><span>Step-by-step builds for technical readers.</span></a><a href="/category/python-ffmpeg/"><b>Python &amp; FFmpeg</b><span>Developer guides to video processing.</span></a><a href="/category/remotion-motion-graphics/"><b>Remotion &amp; Motion Graphics</b><span>Animated text, titles and motion design.</span></a><a href="/category/case-studies/"><b>Case Studies</b><span>Real results, failures and fixes.</span></a>
+          <a href="/articles/"><b>All articles</b><span>Everything we have published, newest first.</span></a>
+        </div>
+      </div>
+      <a href="/studio/" aria-current="page">AI Studio</a>
+      <a href="/engine/" >The Engine</a>
+      <a href="/about/" >About</a>
+      <a href="/search/" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="sr-label">Search</span></a>
+      <a class="btn sm cta" href="/studio/">Try AI Studio free</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="badge"><b>Free</b> Runs in your browser</span>
+    <h1 style="margin-top:16px">AI Video <span class="grad-text">Studio</span></h1>
+    <p>Turn a headline into a script, an AI voiceover and a captioned vertical video, using your own free Google Gemini API key.</p>
+  </div>
+</section>
+<section class="page-body studio-app" id="studio">
+  <div class="wrap studio-wrap">
+    <div class="st-card" id="keyCard">
+      <div class="st-head"><span class="st-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h2>Your Gemini API key</h2><p>Your key stays on this device and is sent only to Google. We never see it or store it.</p></div></div>
+      <div class="st-row">
+        <input id="apiKey" class="st-input" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your Gemini API key">
+        <button class="btn sm" id="saveKey" type="button">Save</button>
+      </div>
+      <label class="st-check"><input type="checkbox" id="rememberKey" checked> Remember on this device</label>
+      <p class="st-note">No key yet? Create one free at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> (sign in, then “Create API key”). Free keys have daily limits set by Google.</p>
+      <p class="st-status" id="keyStatus"></p>
+    </div>
+
+    <div class="st-card">
+      <div class="st-head"><span class="st-num">1</span><div><h2>Script</h2><p>Your headline is never changed. The AI writes only what the headline and your notes support.</p></div></div>
+      <label class="st-label">Headline<input id="headline" class="st-input" maxlength="160" placeholder="e.g. City council approves new bus routes"></label>
+      <label class="st-label">What you know (optional)<textarea id="notes" class="st-input" rows="3" placeholder="Facts from your source: who, what, when, where. The AI will not add facts beyond these."></textarea></label>
+      <div class="st-grid3">
+        <label class="st-label">Length<select id="length" class="st-input"><option value="60">60 seconds (TikTok, Shorts)</option><option value="45">45 seconds</option><option value="90">90 seconds</option></select></label>
+        <label class="st-label">Tone<select id="tone" class="st-input"><option>Neutral news</option><option>Energetic</option><option>Calm explainer</option></select></label>
+        <label class="st-label">Language<select id="lang" class="st-input"><option>English</option><option>Nigerian Pidgin</option><option>French</option><option>Spanish</option><option>Portuguese</option><option>Hausa</option><option>Yoruba</option><option>Igbo</option></select></label>
+      </div>
+      <button class="btn" id="genScript" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg> Write script</button>
+      <div id="scriptOut" hidden>
+        <label class="st-label">Script (you can edit it)<textarea id="script" class="st-input" rows="9"></textarea></label>
+        <p class="st-meta" id="scriptMeta"></p>
+        <div id="warnings"></div>
+        <label class="st-label">On-screen key points (one per line: text | exact phrase from the script where it appears)<textarea id="points" class="st-input" rows="4"></textarea></label>
+      </div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-head"><span class="st-num">2</span><div><h2>Voiceover</h2><p>A natural AI voice reads your script at normal speed.</p></div></div>
+      <div class="st-grid3">
+        <label class="st-label">Voice<select id="voice" class="st-input">
+          <option value="Kore">Kore (firm, clear)</option><option value="Charon">Charon (informative)</option><option value="Puck">Puck (upbeat)</option>
+          <option value="Fenrir">Fenrir (excitable)</option><option value="Aoede">Aoede (breezy)</option><option value="Orus">Orus (firm)</option>
+          <option value="Leda">Leda (youthful)</option><option value="Zephyr">Zephyr (bright)</option></select></label>
+        <label class="st-label" style="grid-column:span 2">Delivery<input id="vstyle" class="st-input" value="Read like a calm, confident news presenter."></label>
+      </div>
+      <button class="btn" id="genVoice" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg> Create voiceover</button>
+      <div id="voiceOut" hidden><audio id="audio" controls></audio><a class="btn light sm" id="dlAudio" download="voiceover.wav">Download audio</a></div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-head"><span class="st-num">3</span><div><h2>Video</h2><p>Add your own clips or photos. The video is made on your device; nothing is uploaded to us.</p></div></div>
+      <label class="st-drop" for="media"><b>Choose clips and photos</b><span>Video or images you have the right to use. Each one shows for about 3 seconds.</span><input id="media" type="file" accept="video/*,image/*" multiple hidden></label>
+      <div class="st-thumbs" id="thumbs"></div>
+      <div class="st-grid3">
+        <label class="st-label">Style<select id="vidStyle" class="st-input"><option value="dynamic">Dynamic</option><option value="typing">Typing</option><option value="clean">Clean</option></select></label>
+        <label class="st-label">Channel name (optional)<input id="brand" class="st-input" maxlength="30" placeholder="Your channel"></label>
+        <label class="st-label">Quality<select id="quality" class="st-input"><option value="720">720 × 1280 (faster)</option><option value="1080">1080 × 1920</option></select></label>
+      </div>
+      <button class="btn" id="render" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M3 15h18M8 4v5M16 4v5M8 15v5M16 15v5"/></svg> Make video</button>
+      <div class="st-progress" id="prog" hidden><div><span id="progBar"></span></div><p id="progText"></p></div>
+      <div class="st-preview"><canvas id="canvas" width="720" height="1280"></canvas></div>
+      <div id="videoOut" hidden><video id="outVideo" controls playsinline></video><a class="btn sm" id="dlVideo" download="ai-video.mp4">Download video</a></div>
+    </div>
+
+    <div class="st-card">
+      <div class="st-head"><span class="st-num">4</span><div><h2>Post pack</h2><p>A description and hashtags ready to paste.</p></div></div>
+      <label class="st-label">Description<textarea id="desc" class="st-input" rows="4"></textarea></label>
+      <label class="st-label">Hashtags<input id="tags" class="st-input"></label>
+      <button class="btn light sm" id="copyPack" type="button">Copy description + hashtags</button>
+    </div>
+
+    <details class="st-card st-adv"><summary>Advanced: AI models</summary>
+      <label class="st-label">Text models (tried in order, comma separated)<input id="textModels" class="st-input"></label>
+      <label class="st-label">Voice models<input id="ttsModels" class="st-input"></label>
+      <button class="btn light sm" id="resetModels" type="button">Reset to defaults</button>
+    </details>
+    <p class="st-note" style="text-align:center">Check every fact before you post. Read our <a href="/responsible-ai-news-rules-for-creators/">responsible AI news rules</a>. AI voices and footage must follow each platform's rules on labelling AI content.</p>
+  </div>
+</section>
+<script src="/static/js/studio.js?v=4664b1b908" defer></script>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg?v=4664b1b908" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+      <p>Make news videos with AI, the smart way. Clear, honest guides for creators who want to make news and explainer videos with AI, from the team that builds the News AI Engine.</p>
+      <a class="btn sm" href="/engine/">Explore the Engine</a>
+    </div>
+    <div>
+      <h2>Guides</h2>
+      <ul><li><a href="/category/creator-guides/">Creator Guides</a></li><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <ul><li><a href="/studio/">AI Video Studio</a></li><li><a href="/engine/">The Engine</a></li><li><a href="/start-here/">Start here</a></li>
+      <li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li>
+      <li><a href="/feed.xml">RSS feed</a></li></ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal"><span>© 2026 News AI Engine. All rights reserved.</span><span>Educational content. Not affiliated with Google, TikTok or YouTube.</span></div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site features and, where enabled, advertising by Google. Read our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">Got it</button>
+</div>
+<script src="/static/js/site.js?v=4664b1b908" defer></script>
+</body>
+</html>
