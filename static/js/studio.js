@@ -388,17 +388,23 @@ Return JSON with keys:
       c.fillStyle = "#8b5cf6"; c.fillRect(0, H - 8 * u, W * Math.min(1, t / duration), 8 * u);
     }
 
-    let left = false;
+    let left = false, stalled = false, lock = null;
     const onHide = () => { if (document.hidden) left = true; };
     document.addEventListener("visibilitychange", onHide);
+    try { lock = await navigator.wakeLock?.request("screen"); } catch (e) { /* not supported: rely on stall check */ }
     try {
       frame(0);
       rec.start(500);
       src.start(a.currentTime + 0.15); const t0 = performance.now() + 150;
       await new Promise((resolve) => {
+        let last = performance.now();
         const tick = () => {
-          const t = (performance.now() - t0) / 1000;
-          if (left) return resolve();
+          const now = performance.now(), t = (now - t0) / 1000;
+          // Browsers stop drawing when the screen dims/locks, the app is switched or battery saver throttles.
+          // Sound keeps recording, so the picture would end early: stop and say so instead.
+          if (now - last > 1200 && t > 0.5) stalled = true;
+          last = now;
+          if (left || stalled) return resolve();
           frame(Math.max(0, t));
           $("progBar").style.width = Math.min(100, (t / duration) * 100) + "%";
           $("progText").textContent = `Recording ${Math.max(0, Math.min(duration, t)).toFixed(0)} / ${duration.toFixed(0)} s. Keep this tab open and the screen on.`;
@@ -409,6 +415,7 @@ Return JSON with keys:
       });
     } finally {
       document.removeEventListener("visibilitychange", onHide);
+      try { await lock?.release(); } catch (e) { /* already released */ }
       try { if (rec.state !== "inactive") rec.stop(); } catch (e) { /* already stopped */ }
       try { src.stop(); } catch (e) { /* not started */ }
       src.disconnect();
@@ -417,7 +424,11 @@ Return JSON with keys:
       await Promise.race([done, wait(3000)]);
       stream.getTracks().forEach((tr) => tr.stop());
     }
-    if (left) { $("progText").textContent = "Recording stopped because the app or tab was switched. Keep this tab open and try again."; return; }
+    if (left || stalled) {
+      $("progText").textContent = left ? "Recording stopped because the app or tab was switched. Keep this tab open and try again."
+        : "Recording stopped: the phone paused drawing (screen dimmed or locked, or battery saver). Keep the screen on, turn off battery saver, and try again.";
+      return;
+    }
     const type = (rec.mimeType || mime || "video/webm").split(";")[0];
     const blob = new Blob(chunks, {type}), url = URL.createObjectURL(blob);
     if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
