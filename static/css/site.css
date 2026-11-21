@@ -270,3 +270,4 @@ p { margin: 0 0 1em; }
 .feature img { height: 100%; min-height: 100%; }
 @media (min-width: 861px) { .feature { grid-template-columns: 1.25fr 1fr; } .feature img { object-fit: cover; object-position: left center; } }
 @media (max-width: 560px) { .topics.full { grid-template-columns: 1fr; } .topics.full .topic span { display: block; } }
+[hidden] { display: none !important; }
