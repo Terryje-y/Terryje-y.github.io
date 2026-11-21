@@ -138,10 +138,19 @@ Return JSON with keys:
     if (!script) { alert("Write or paste a script in step 1 first."); return; }
     const btn = $("genVoice"); busy(btn, true, "Recording voice…");
     try {
-      const style = $("vstyle").value.trim();
-      const {data} = await gemini(models("ttsModels"), {
-        contents: [{parts: [{text: (style ? style + " Read the following text exactly as written:\n\n" : "") + script}]}],
-        generationConfig: {responseModalities: ["AUDIO"], speechConfig: {voiceConfig: {prebuiltVoiceConfig: {voiceName: $("voice").value}}}}}, 180000);
+      // Only the script is ever sent as text to speak. Accent / delivery go in a separate, never-spoken instruction.
+      const style = $("vstyle").value.trim(), accent = $("accent").value;
+      const guide = [accent && `Speak with a natural ${accent} accent.`, style && `Delivery: ${style}.`].filter(Boolean).join(" ");
+      const body = {contents: [{role: "user", parts: [{text: script}]}],
+        generationConfig: {responseModalities: ["AUDIO"], speechConfig: {voiceConfig: {prebuiltVoiceConfig: {voiceName: $("voice").value}}}}};
+      let data;
+      try {
+        ({data} = await gemini(models("ttsModels"), guide ? {...body, systemInstruction: {parts: [{text: guide + " Read the user's text exactly as written and say nothing else."}]}} : body, 180000));
+      } catch (e) {
+        if (e instanceof Fatal || !guide) throw e;
+        ({data} = await gemini(models("ttsModels"), body, 180000));   // model rejected style guidance: plain script only
+        alert("This voice model ignored the accent/delivery setting, so the default voice style was used.");
+      }
       const part = ((data.candidates || [])[0]?.content?.parts || []).find((p) => p.inlineData);
       if (!part) throw new Error("The voice model returned no audio. Try again or pick another voice.");
       const bytes = b64bytes(part.inlineData.data), mime = part.inlineData.mimeType || "";
