@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stop AI Preambles From Reaching Your Text-to-Speech</title>
+<meta name="description" content="Headings, stage directions and &#39;Here is your script&#39; notes were read aloud by our narrator. The cleaner that keeps only speakable text.">
+<link rel="canonical" href="https://terryje-y.github.io/stop-ai-preambles-reaching-tts/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Stop AI Preambles From Reaching Your Text-to-Speech">
+<meta property="og:description" content="Headings, stage directions and &#39;Here is your script&#39; notes were read aloud by our narrator. The cleaner that keeps only speakable text.">
+<meta property="og:url" content="https://terryje-y.github.io/stop-ai-preambles-reaching-tts/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/stop-ai-preambles-reaching-tts.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Stop AI Preambles From Reaching Your Text-to-Speech", "description": "Headings, stage directions and 'Here is your script' notes were read aloud by our narrator. The cleaner that keeps only speakable text.", "image": ["https://terryje-y.github.io/static/img/covers/stop-ai-preambles-reaching-tts.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/stop-ai-preambles-reaching-tts/", "wordCount": 672, "articleSection": "AI News Automation", "keywords": "tts, python, regex, scripts, quality"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "AI News Automation", "item": "https://terryje-y.github.io/category/ai-news-automation/"}, {"@type": "ListItem", "position": 3, "name": "Stop AI Preambles From Reaching Your Text-to-Speech", "item": "https://terryje-y.github.io/stop-ai-preambles-reaching-tts/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/ai-news-automation/">AI News Automation</a></nav>
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h1>Stop AI Preambles From Reaching Your Text-to-Speech</h1>
+    <p class="lead">Headings, stage directions and &#39;Here is your script&#39; notes were read aloud by our narrator. The cleaner that keeps only speakable text.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>3 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/stop-ai-preambles-reaching-tts.jpg" alt="Stop AI Preambles From Reaching Your Text-to-Speech" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#why-just-tell-the-model-not-to-is-not-enough">Why &amp;ldquo;just tell the model not to&amp;rdquo; is not enough</a></li><li><a href="#what-must-be-removed-and-what-must-stay">What must be removed - and what must stay</a></li><li><a href="#detecting-headings-safely">Detecting headings safely</a></li><li><a href="#meta-lines-and-preambles">Meta lines and preambles</a></li><li><a href="#dont-discard-the-warnings">Don&amp;rsquo;t discard the warnings</a></li><li><a href="#a-second-line-of-defence-in-quality-control">A second line of defence in quality control</a></li><li><a href="#testing-it-on-real-drafts">Testing it on real drafts</a></li><li><a href="#takeaways">Takeaways</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>One of the most embarrassing bugs in our engine was invisible in the script editor and obvious to anyone who listened: the synthetic narrator occasionally read out things that were never meant to be spoken.</p>
+<p>When we inspected the text actually sent to text-to-speech, we found lines like these at the top of real narration files:</p>
+<pre><code class="language-text">One note before the script: I could not verify the supplied headline...
+# BREAKING NEWS SCRIPT
+**[SCENE START]**
+**HOOK**
+</code></pre>
+<p>A language model writing a &ldquo;script&rdquo; naturally formats it like a script - headings, scene markers, citation tags like <code>[S1]</code>, and sometimes a polite note to the editor. All of that is useful on screen. None of it belongs in the audio.</p>
+<h2 id="why-just-tell-the-model-not-to-is-not-enough">Why &ldquo;just tell the model not to&rdquo; is not enough</h2>
+<p>Our prompt already said <em>&ldquo;Do not explain your writing process&rdquo;</em> and <em>&ldquo;Do not include headings in narration&rdquo;</em>. Models mostly comply, but &ldquo;mostly&rdquo; is not acceptable when the output is a published voice-over. The fix has to live in code, after generation and before speech.</p>
+<h2 id="what-must-be-removed-and-what-must-stay">What must be removed - and what must stay</h2>
+<p>We wrote down the rules before writing any regular expressions.</p>
+<p><strong>Remove:</strong></p>
+<ul>
+<li>section headings (<code>## INTRODUCTION</code>, <code>**HOOK**</code>, <code>1. MAIN INCIDENT</code>, short all-caps title lines);</li>
+<li>the visual-only &ldquo;development board&rdquo; block;</li>
+<li>stage directions (<code>[SCENE START]</code>, <code>[MUSIC]</code>, <code>(pause)</code>);</li>
+<li>citation markers (<code>[S1]</code>, <code>[Source 2]</code>) and the source-notes list;</li>
+<li>AI meta lines (&ldquo;Here is the script&rdquo;, &ldquo;As an AI&rdquo;, &ldquo;Word count:&rdquo;, &ldquo;Job ID:&rdquo;);</li>
+<li>a preamble before the first heading, <em>if</em> it reads like a note to the editor.</li>
+</ul>
+<p><strong>Keep:</strong></p>
+<ul>
+<li>every factual qualification <em>inside</em> narration paragraphs - &ldquo;according to reports&rdquo;, &ldquo;if verified&rdquo;, &ldquo;the claim has not been confirmed&rdquo;. These are part of honest journalism, not AI chatter.</li>
+</ul>
+<p>That second list is the reason a blunt &ldquo;delete anything mentioning verification&rdquo; rule would be wrong.</p>
+<h2 id="detecting-headings-safely">Detecting headings safely</h2>
+<p>A heading can look like many things. Our detector normalises a line, then checks it against known section names, Markdown headings, bold-only lines and short all-caps titles:</p>
+<pre><code class="language-python">def is_heading(line):
+    raw = line.strip()
+    if inline_body(raw):           # &quot;**DEVELOPMENT ONE:** The court adjourned...&quot; is narration
+        return False
+    key = heading_key(raw)         # strip #, **, numbering, trailing colon -&gt; upper case
+    if any(key == n or key.startswith(n + &quot; &quot;) for n in SECTION_NAMES):
+        return True
+    if raw.startswith(&quot;#&quot;) or re.fullmatch(r&quot;\*\*[^*]{1,80}\*\*:?&quot;, raw):
+        return True
+    letters = re.sub(r&quot;[^A-Za-z]&quot;, &quot;&quot;, raw)
+    return bool(letters) and letters.isupper() and len(raw.split()) &lt;= 9 and not raw.endswith((&quot;.&quot;, &quot;?&quot;, &quot;!&quot;))
+</code></pre>
+<p>The <code>inline_body</code> check matters. Models sometimes write a label and a full sentence on one line:</p>
+<pre><code class="language-text">**DEVELOPMENT ONE:** The court adjourned the case until next Tuesday, according to the defence.
+</code></pre>
+<p>Deleting that whole line would delete real narration. Instead, if the text after the label is a proper sentence of eight or more words, we keep the sentence and drop only the label.</p>
+<h2 id="meta-lines-and-preambles">Meta lines and preambles</h2>
+<p>Meta text is matched on the line <em>after</em> stripping Markdown, because models often bold their own notes (<code>**Job ID:** …</code>):</p>
+<pre><code class="language-python">META_LINE = re.compile(r&quot;(?i)^\s*(?:(?:one\s+)?note\s*:|here(?:'s| is)\s+(?:the|your)\b.*\bscript|&quot;
+                       r&quot;as an ai\b|i (?:could not|cannot) verify|word count\s*:|job id\s*:)&quot;)
+</code></pre>
+<p>For text that appears <em>before</em> the first heading, we only treat it as a preamble if it contains editorial vocabulary (&ldquo;script&rdquo;, &ldquo;headline&rdquo;, &ldquo;verify&rdquo;, &ldquo;source material&rdquo;). A news story that simply starts without a heading is left alone.</p>
+<h2 id="dont-discard-the-warnings">Don&rsquo;t discard the warnings</h2>
+<p>The most important design choice: removed meta text is <strong>returned, not thrown away</strong>.</p>
+<pre><code class="language-python">result = clean_narration(draft)
+result[&quot;text&quot;]          # what the narrator will read
+result[&quot;editor_notes&quot;]  # e.g. &quot;I could not verify the supplied headline...&quot;
+result[&quot;removed&quot;]       # [&quot;preamble&quot;, &quot;heading:HOOK&quot;, &quot;development_board&quot;, ...]
+</code></pre>
+<p>A model saying &ldquo;I could not verify this headline&rdquo; is a signal a human editor should see. We save it next to the job and show it in the dashboard. The narrator never says it; the editor never misses it.</p>
+<h2 id="a-second-line-of-defence-in-quality-control">A second line of defence in quality control</h2>
+<p>After rendering, our quality checks run an artifact detector on the final narration text and fail the video if any heading, stage direction, citation marker or meta line survived. That turns a silent embarrassment into a blocked publish with a clear reason.</p>
+<h2 id="testing-it-on-real-drafts">Testing it on real drafts</h2>
+<p>We ran the cleaner against every historical draft in the engine. A few results:</p>
+<ul>
+<li>a 1,700-word draft lost its editorial preamble, a channel-name heading, a &ldquo;Job ID&rdquo; line and nine section headings - and kept every narration paragraph;</li>
+<li>a draft that labelled developments inline kept the sentences and dropped only the labels;</li>
+<li>drafts with no problems came through unchanged.</li>
+</ul>
+<p>We keep a small unit test with a deliberately messy script:</p>
+<pre><code class="language-python">raw = (&quot;One note before the script: I could not verify the headline.\n\n# CHANNEL - BREAKING\n**HOOK**\n&quot;
+       &quot;If verified, this is huge [S1]. (pause)\n\n## MAIN INCIDENT\nThe court sat today, according to reports.\n&quot;
+       &quot;SOURCE NOTES\n[S1] http://example.com&quot;)
+assert clean_narration(raw)[&quot;text&quot;] == &quot;If verified, this is huge.\n\nThe court sat today, according to reports.&quot;
+</code></pre>
+<p>Note what survives: <em>&ldquo;If verified&rdquo;</em> and <em>&ldquo;according to reports&rdquo;</em>.</p>
+<h2 id="takeaways">Takeaways</h2>
+<ul>
+<li>Treat the text sent to TTS as its own artifact, and inspect it.</li>
+<li>Strip structure, not substance: headings and stage directions go; qualifications stay.</li>
+<li>Surface removed editorial notes to a human instead of deleting them.</li>
+<li>Back the cleaner with an automated check after rendering.</li>
+</ul>
+<p>Related: <a href="/inside-an-ai-news-video-pipeline/">Inside an AI News Video Pipeline</a>.</p></div>
+    <p class="tags"><span>#tts</span><span>#python</span><span>#regex</span><span>#scripts</span><span>#quality</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/stop-ai-preambles-reaching-tts/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/stop-ai-preambles-reaching-tts/&text=Stop%20AI%20Preambles%20From%20Reaching%20Your%20Text-to-Speech" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/stop-ai-preambles-reaching-tts/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/ai-script-generation-news-guardrails/" class="card-img"><img src="/static/img/covers/ai-script-generation-news-guardrails.jpg" alt="AI Script Generation for News Videos: Structure, Length and Factual Guard-rails" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/ai-script-generation-news-guardrails/">AI Script Generation for News Videos: Structure, Length and Factual Guard-rails</a></h3>
+    <p>How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/inside-an-ai-news-video-pipeline/" class="card-img"><img src="/static/img/covers/inside-an-ai-news-video-pipeline.jpg" alt="Inside an AI News Video Pipeline: From Headline to Finished Video" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/inside-an-ai-news-video-pipeline/">Inside an AI News Video Pipeline: From Headline to Finished Video</a></h3>
+    <p>How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 5 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/multi-provider-ai-router/" class="card-img"><img src="/static/img/covers/multi-provider-ai-router.jpg" alt="Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-tools/">AI Tools</a>
+    <h3><a href="/multi-provider-ai-router/">Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation</a></h3>
+    <p>A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

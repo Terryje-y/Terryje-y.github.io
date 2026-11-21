@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Script Generation for News Videos: Structure, Length and Factual Guard-rails</title>
+<meta name="description" content="How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.">
+<link rel="canonical" href="https://terryje-y.github.io/ai-script-generation-news-guardrails/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="AI Script Generation for News Videos: Structure, Length and Factual Guard-rails">
+<meta property="og:description" content="How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.">
+<meta property="og:url" content="https://terryje-y.github.io/ai-script-generation-news-guardrails/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/ai-script-generation-news-guardrails.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AI Script Generation for News Videos: Structure, Length and Factual Guard-rails", "description": "How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.", "image": ["https://terryje-y.github.io/static/img/covers/ai-script-generation-news-guardrails.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/ai-script-generation-news-guardrails/", "wordCount": 778, "articleSection": "AI News Automation", "keywords": "llm, prompting, scripts, journalism, guardrails"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "AI News Automation", "item": "https://terryje-y.github.io/category/ai-news-automation/"}, {"@type": "ListItem", "position": 3, "name": "AI Script Generation for News Videos: Structure, Length and Factual Guard-rails", "item": "https://terryje-y.github.io/ai-script-generation-news-guardrails/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/ai-news-automation/">AI News Automation</a></nav>
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h1>AI Script Generation for News Videos: Structure, Length and Factual Guard-rails</h1>
+    <p class="lead">How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>4 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/ai-script-generation-news-guardrails.jpg" alt="AI Script Generation for News Videos: Structure, Length and Factual Guard-rails" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#start-from-a-human-headline">Start from a human headline</a></li><li><a href="#ask-for-structure-not-prose">Ask for structure, not prose</a></li><li><a href="#a-retention-structure">A retention structure</a></li><li><a href="#target-speaking-time-not-words">Target speaking time, not words</a></li><li><a href="#factual-boundaries-stated-plainly">Factual boundaries, stated plainly</a></li><li><a href="#guard-rails-in-code">Guard-rails in code</a></li><li><a href="#flag-what-you-cannot-verify">Flag what you cannot verify</a></li><li><a href="#optional-research-grounding">Optional research grounding</a></li><li><a href="#what-the-model-never-does">What the model never does</a></li><li><a href="#takeaways">Takeaways</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>A news script has two jobs that pull in opposite directions. It must be <strong>gripping</strong> - a short video loses viewers in the first three seconds - and it must be <strong>accurate</strong>, because invented details in a news video can mislead thousands of people. This article explains how our engine asks language models for scripts that do both, and how code, not hope, enforces the rules.</p>
+<h2 id="start-from-a-human-headline">Start from a human headline</h2>
+<p>The engine never decides what the story is. A person writes the headline; the system writes narration <em>about that headline</em>. The headline is shown on screen exactly as typed and is never rewritten by the model.</p>
+<h2 id="ask-for-structure-not-prose">Ask for structure, not prose</h2>
+<p>Free-form text is hard to validate. We ask for JSON:</p>
+<pre><code class="language-json">{
+  &quot;narration&quot;: [&quot;hook paragraph&quot;, &quot;context paragraph&quot;, &quot;development paragraph&quot;, &quot;...&quot;],
+  &quot;developments&quot;: [{&quot;headline&quot;: &quot;COURT UPDATE&quot;, &quot;anchor&quot;: &quot;The court adjourned the case&quot;, &quot;status&quot;: &quot;reported&quot;}],
+  &quot;people&quot;: [{&quot;name&quot;: &quot;…&quot;, &quot;role&quot;: &quot;SHORT ROLE&quot;, &quot;anchor&quot;: &quot;first words where named&quot;}],
+  &quot;places&quot;: [{&quot;name&quot;: &quot;…&quot;, &quot;anchor&quot;: &quot;…&quot;}],
+  &quot;key_phrases&quot;: [{&quot;text&quot;: &quot;two to five words copied exactly&quot;, &quot;weight&quot;: &quot;high&quot;}],
+  &quot;editor_note&quot;: &quot;verification concerns for the editor - never spoken&quot;
+}
+</code></pre>
+<p>Each piece feeds something downstream. Paragraphs go to the narrator, development labels go to on-screen boards, anchors tell the editor <em>when</em> to show them, and key phrases drive caption emphasis. The <code>editor_note</code> field gives the model a legitimate place to raise doubts, so it does not put them in the narration.</p>
+<h2 id="a-retention-structure">A retention structure</h2>
+<p>For a 60-70 second short, we ask for:</p>
+<ol>
+<li><strong>Hook</strong> - one sentence, at most about 14 words, naming who and what, with tension and an open question. &ldquo;X is facing renewed scrutiny&rdquo; is weak; &ldquo;X&rsquo;s freedom now hangs on one ruling - and the court is under pressure&rdquo; is a hook.</li>
+<li><strong>Context</strong> - who, what and where, immediately.</li>
+<li><strong>Two or three developments</strong> - distinct angles, each opening with a clear sentence.</li>
+<li><strong>What happens next</strong> - a sharp ending with stakes. No &ldquo;like and subscribe&rdquo;.</li>
+</ol>
+<p>Banned openings are enforced in code: if the first sentence contains &ldquo;welcome&rdquo;, &ldquo;in this video&rdquo; or a &ldquo;what if&rdquo; question, the script is rejected.</p>
+<h2 id="target-speaking-time-not-words">Target speaking time, not words</h2>
+<p>Our narrator speaks at about 126-157 words per minute, averaging around 140. A 65-second target therefore needs about 155 words. Models consistently under-write when given a word count, so we ask for <em>sentences and paragraphs</em> (&ldquo;13-15 sentences across 5-6 paragraphs&rdquo;) and validate the word count afterwards.</p>
+<p>When a script is short, the rejection message tells the model exactly what to fix:</p>
+<blockquote>
+<p>Narration has only 129 words; it needs 155 (add about 26 words: deepen the developments and the stakes with real context, no filler).</p>
+</blockquote>
+<p>One repair attempt usually succeeds within seconds.</p>
+<h2 id="factual-boundaries-stated-plainly">Factual boundaries, stated plainly</h2>
+<p>The prompt contains a short, non-negotiable block:</p>
+<ul>
+<li>Never invent meetings, threats, resignations, documents, quotations, court decisions, numbers, dates or evidence.</li>
+<li>Treat the headline as a <strong>reported</strong> development unless research notes confirm it, and attribute it (&ldquo;reports say&rdquo;, &ldquo;according to claims circulating&rdquo;).</li>
+<li>Never describe an allegation as confirmed; keep analysis clearly labelled as analysis.</li>
+<li>Well-established public background may be used.</li>
+</ul>
+<p>Strong storytelling must come from the real stakes of the story, not from fabricated drama.</p>
+<h2 id="guard-rails-in-code">Guard-rails in code</h2>
+<p>Prompts reduce problems; validators catch what slips through.</p>
+<p><strong>Unsupported certainty.</strong> Without research notes, phrases such as &ldquo;official reports confirm&rdquo; or &ldquo;sources confirmed that&rdquo; are rejected, because nothing was confirmed. Correct negatives (&ldquo;has not confirmed&rdquo;) pass:</p>
+<pre><code class="language-python">UNSUPPORTED = re.compile(r&quot;(?i)(?&lt;!not )\b((?:official(?:ly)?|reports?|sources?|it has been)\s+confirm(?:s|ed)?|&quot;
+                         r&quot;confirm(?:s|ed)\s+that|now confirmed)\b&quot;)
+</code></pre>
+<p><strong>Status downgrade.</strong> If the model marks a development &ldquo;confirmed&rdquo; but no research was supplied, the engine changes it to &ldquo;reported&rdquo;.</p>
+<p><strong>Anchors must exist.</strong> Every anchor phrase must appear verbatim in the narration, or the development cannot be timed.</p>
+<p><strong>Title relevance.</strong> At least one meaningful word from the headline must appear in the narration.</p>
+<h2 id="flag-what-you-cannot-verify">Flag what you cannot verify</h2>
+<p>Even a careful model, working from a headline alone, may add specifics such as a figure, a weekday, a court filing or &ldquo;effective immediately&rdquo;. These may be true background or may be invented. We cannot know without research, so the engine lists them for the editor:</p>
+<pre><code class="language-text">Unverified specifics - check before posting:
+- seventy thousand naira
+- effective immediately
+- file court papers
+</code></pre>
+<p>The list appears in the dashboard and as a quality warning. A human decides.</p>
+<h2 id="optional-research-grounding">Optional research grounding</h2>
+<p>For stories where accuracy matters most, the engine can first gather short factual notes with a search-grounded model call. Each point is tied to a named publication and unconfirmed items are marked. The script must then use those notes for specifics. This is slower and can cost more, so it is a per-batch choice.</p>
+<h2 id="what-the-model-never-does">What the model never does</h2>
+<ul>
+<li>Choose the story or rewrite the headline.</li>
+<li>Publish anything on its own.</li>
+<li>Hide its doubts: they go to <code>editor_note</code>, which a person reads.</li>
+</ul>
+<h2 id="takeaways">Takeaways</h2>
+<ul>
+<li>Ask for structured output that downstream code can verify.</li>
+<li>Specify length as speaking time, and repair short answers with precise feedback.</li>
+<li>Put factual rules in the prompt <em>and</em> in validators.</li>
+<li>Surface unverifiable specifics instead of silently trusting them.</li>
+</ul>
+<p>For the other half of the problem, removing AI meta-text before speech, see <a href="/stop-ai-preambles-reaching-tts/">Stop AI Preambles From Reaching Your Text-to-Speech</a>.</p></div>
+    <p class="tags"><span>#llm</span><span>#prompting</span><span>#scripts</span><span>#journalism</span><span>#guardrails</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/ai-script-generation-news-guardrails/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/ai-script-generation-news-guardrails/&text=AI%20Script%20Generation%20for%20News%20Videos%3A%20Structure%2C%20Length%20and%20Factual%20Guard-rails" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/ai-script-generation-news-guardrails/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/stop-ai-preambles-reaching-tts/" class="card-img"><img src="/static/img/covers/stop-ai-preambles-reaching-tts.jpg" alt="Stop AI Preambles From Reaching Your Text-to-Speech" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/stop-ai-preambles-reaching-tts/">Stop AI Preambles From Reaching Your Text-to-Speech</a></h3>
+    <p>Headings, stage directions and &#39;Here is your script&#39; notes were read aloud by our narrator. The cleaner that keeps only speakable text.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 3 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/inside-an-ai-news-video-pipeline/" class="card-img"><img src="/static/img/covers/inside-an-ai-news-video-pipeline.jpg" alt="Inside an AI News Video Pipeline: From Headline to Finished Video" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/inside-an-ai-news-video-pipeline/">Inside an AI News Video Pipeline: From Headline to Finished Video</a></h3>
+    <p>How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 5 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/gemini-504-deadline-exceeded-case-study/" class="card-img"><img src="/static/img/covers/gemini-504-deadline-exceeded-case-study.jpg" alt="Why Our AI Scripts Kept Failing: A 504 DEADLINE_EXCEEDED Case Study" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/case-studies/">Case Studies</a>
+    <h3><a href="/gemini-504-deadline-exceeded-case-study/">Why Our AI Scripts Kept Failing: A 504 DEADLINE_EXCEEDED Case Study</a></h3>
+    <p>Our AI script stage failed more than it succeeded. The cause was timeouts, retries and fallback wiring - not the prompt. Diagnosis and fix.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

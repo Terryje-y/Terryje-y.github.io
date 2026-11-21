@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone</title>
+<meta name="description" content="Time every spoken word for captions and graphics by aligning whisper.cpp word timestamps to your known script - running on a phone.">
+<link rel="canonical" href="https://terryje-y.github.io/forced-alignment-whisper-cpp-captions/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone">
+<meta property="og:description" content="Time every spoken word for captions and graphics by aligning whisper.cpp word timestamps to your known script - running on a phone.">
+<meta property="og:url" content="https://terryje-y.github.io/forced-alignment-whisper-cpp-captions/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/forced-alignment-whisper-cpp-captions.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone", "description": "Time every spoken word for captions and graphics by aligning whisper.cpp word timestamps to your known script - running on a phone.", "image": ["https://terryje-y.github.io/static/img/covers/forced-alignment-whisper-cpp-captions.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/forced-alignment-whisper-cpp-captions/", "wordCount": 728, "articleSection": "Video Editing", "keywords": "whisper, captions, alignment, python, termux"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Video Editing", "item": "https://terryje-y.github.io/category/video-editing/"}, {"@type": "ListItem", "position": 3, "name": "Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone", "item": "https://terryje-y.github.io/forced-alignment-whisper-cpp-captions/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/video-editing/">Video Editing</a></nav>
+    <a class="chip" href="/category/video-editing/">Video Editing</a>
+    <h1>Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone</h1>
+    <p class="lead">Time every spoken word for captions and graphics by aligning whisper.cpp word timestamps to your known script - running on a phone.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>4 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/forced-alignment-whisper-cpp-captions.jpg" alt="Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#transcription-versus-forced-alignment">Transcription versus forced alignment</a></li><li><a href="#step-1-get-word-level-timestamps-from-whispercpp">Step 1: Get word-level timestamps from whisper.cpp</a></li><li><a href="#step-2-normalise-both-sides">Step 2: Normalise both sides</a></li><li><a href="#step-3-align-with-sequence-matching">Step 3: Align with sequence matching</a></li><li><a href="#step-4-interpolate-what-whisper-missed">Step 4: Interpolate what Whisper missed</a></li><li><a href="#step-5-measure-coverage">Step 5: Measure coverage</a></li><li><a href="#using-the-timeline">Using the timeline</a></li><li><a href="#running-whispercpp-on-android">Running whisper.cpp on Android</a></li><li><a href="#summary">Summary</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>Captions that drift half a second behind the voice look cheap. Graphics that appear before the narrator mentions them look broken. Both problems have the same cause: guessing when words are spoken. This tutorial shows how we stopped guessing.</p>
+<h2 id="transcription-versus-forced-alignment">Transcription versus forced alignment</h2>
+<p>There are two ways to get word timings from narration:</p>
+<ul>
+<li><strong>Transcription</strong> - run speech recognition and use whatever words it hears. You get timings, but the words may be wrong (names, numbers, homophones).</li>
+<li><strong>Forced alignment</strong> - you already know the exact text, because you wrote the script. You only need <em>when</em> each known word was spoken.</li>
+</ul>
+<p>We have the script, so we use a hybrid: run speech recognition to get timed words, then align them to the script text. The captions use the <em>script&rsquo;s</em> spelling; the timings come from the <em>audio</em>.</p>
+<h2 id="step-1-get-word-level-timestamps-from-whispercpp">Step 1: Get word-level timestamps from whisper.cpp</h2>
+<p>whisper.cpp is a fast C++ implementation of Whisper that runs on CPUs, including ARM phones. Two flags make it produce one word per segment with timestamps:</p>
+<pre><code class="language-bash">ffmpeg -i narration.wav -ar 16000 -ac 1 narration16k.wav
+whisper-cli -m ggml-base.en.bin -f narration16k.wav -t 4 \
+  -ml 1 -sow -ojf -of narration -l en
+</code></pre>
+<ul>
+<li><code>-ml 1</code> limits segments to one token&rsquo;s length; with <code>-sow</code> (split on word) each segment is one word.</li>
+<li><code>-ojf</code> writes full JSON, including millisecond offsets per segment.</li>
+</ul>
+<p>On our phone, the <code>base.en</code> model with four threads ran at roughly <strong>1.1x real time</strong>: a 30-second narration took about 33 seconds. That is acceptable for a background pipeline.</p>
+<p>Reading the output in Python:</p>
+<pre><code class="language-python">data = json.load(open(&quot;narration.json&quot;))
+words = [{&quot;text&quot;: s[&quot;text&quot;].strip(), &quot;start&quot;: s[&quot;offsets&quot;][&quot;from&quot;] / 1000, &quot;end&quot;: s[&quot;offsets&quot;][&quot;to&quot;] / 1000}
+         for s in data[&quot;transcription&quot;] if s[&quot;text&quot;].strip()]
+</code></pre>
+<h2 id="step-2-normalise-both-sides">Step 2: Normalise both sides</h2>
+<p>Alignment compares words, so both sides must be normalised the same way: lowercase, apostrophes removed, punctuation stripped.</p>
+<pre><code class="language-python">def norm(word):
+    word = word.lower().replace(&quot;’&quot;, &quot;&quot;).replace(&quot;'&quot;, &quot;&quot;)
+    return re.sub(r&quot;[^a-z0-9]+&quot;, &quot;&quot;, word)
+</code></pre>
+<p>A subtle bug we hit: when normalising whole paragraphs, removing newlines without inserting a space glued the last word of one paragraph to the first word of the next (&ldquo;custody&rdquo; + &ldquo;On&rdquo; became &ldquo;custodyon&rdquo;). Always replace non-alphanumeric characters with a space, then split.</p>
+<h2 id="step-3-align-with-sequence-matching">Step 3: Align with sequence matching</h2>
+<p>Python&rsquo;s <code>difflib.SequenceMatcher</code> finds the longest matching runs between two sequences - exactly what we need.</p>
+<pre><code class="language-python">a = [norm(w) for w in script_words]
+b = [norm(w[&quot;text&quot;]) for w in recognised]
+matcher = difflib.SequenceMatcher(a=a, b=b, autojunk=False)
+for block in matcher.get_matching_blocks():
+    for k in range(block.size):
+        i, j = block.a + k, block.b + k
+        timeline[i].update(start=recognised[j][&quot;start&quot;], end=recognised[j][&quot;end&quot;], matched=True)
+</code></pre>
+<p>Then we rescue near-misses: in &ldquo;replace&rdquo; regions of equal length, pairs whose spelling similarity is at least 0.75 are accepted (Whisper writes &ldquo;naira&rdquo; where the script says &ldquo;Naira&rsquo;s&ldquo;, for example).</p>
+<blockquote>
+<p>Set <code>autojunk=False</code>. With long narrations, the default heuristic treats frequent words such as &ldquo;the&rdquo; as junk and produces poor alignments.</p>
+</blockquote>
+<h2 id="step-4-interpolate-what-whisper-missed">Step 4: Interpolate what Whisper missed</h2>
+<p>Some script words are never matched - a number written as digits, a name Whisper misheard. For each run of unmatched words, we spread them between the neighbouring matched words, weighted by character length:</p>
+<pre><code class="language-python">left = timeline[i - 1][&quot;end&quot;] if i &gt; 0 else 0.0
+right = timeline[j][&quot;start&quot;] if j &lt; n else duration
+weights = [len(w[&quot;w&quot;]) + 1 for w in timeline[i:j]]
+</code></pre>
+<p>Longer words get more time, which matches how people speak far better than equal slices.</p>
+<p>Finally, we enforce monotonic times, so a word never starts before the previous one.</p>
+<h2 id="step-5-measure-coverage">Step 5: Measure coverage</h2>
+<p>The share of script words that matched directly is our quality signal. On our narrations it is usually <strong>94-97%</strong>. Our quality control fails any video below 70%, because at that point captions are mostly interpolated guesses.</p>
+<p>If speech recognition is unavailable, the engine falls back to a silence-aware proportional estimate - and marks the video so automatic publishing is blocked. Estimated timing is fine for a preview, not for a published caption.</p>
+<h2 id="using-the-timeline">Using the timeline</h2>
+<p>With a reliable word timeline, everything else becomes simple lookups.</p>
+<p><strong>Captions.</strong> Group words into chunks that fit two lines, break at sentence ends and pauses over 280 ms, and never end a chunk on a function word such as &ldquo;a&rdquo; or &ldquo;the&rdquo;. Highlight the active word.</p>
+<p><strong>Graphics on cue.</strong> To show a &ldquo;Development 02&rdquo; board when that development begins, search the timeline for its anchor phrase and use the first word&rsquo;s start time:</p>
+<pre><code class="language-python">hit = find_phrase_time(timeline, &quot;Labour unions threaten nationwide shutdown&quot;)
+board_start = hit[&quot;start&quot;]
+</code></pre>
+<p>Our quality check then confirms that the board&rsquo;s start equals the anchor&rsquo;s first-word time, and that the first word was genuinely matched rather than interpolated.</p>
+<h2 id="running-whispercpp-on-android">Running whisper.cpp on Android</h2>
+<p>We run whisper.cpp inside a lightweight Ubuntu environment on the phone (via proot-distro) and call it from Termux. The model file for <code>base.en</code> is about 140 MB. <code>small.en</code> is more accurate but roughly twice as slow, and for clean synthetic narration <code>base.en</code> has been more than good enough.</p>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>Use speech recognition for <em>timing</em>, your script for <em>text</em>.</li>
+<li>Normalise carefully and align with <code>SequenceMatcher(autojunk=False)</code>.</li>
+<li>Interpolate gaps by character length.</li>
+<li>Track coverage and refuse to publish on estimated timing.</li>
+</ul>
+<p>Next: see how those timings drive motion graphics in <a href="/ass-subtitles-motion-graphics-ffmpeg/">Animating News Graphics With ASS Subtitles</a>.</p></div>
+    <p class="tags"><span>#whisper</span><span>#captions</span><span>#alignment</span><span>#python</span><span>#termux</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/forced-alignment-whisper-cpp-captions/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/forced-alignment-whisper-cpp-captions/&text=Forced%20Alignment%20With%20whisper.cpp%3A%20Word-Accurate%20Captions%20on%20a%20Phone" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/forced-alignment-whisper-cpp-captions/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/ai-visual-director-restraint/" class="card-img"><img src="/static/img/covers/ai-visual-director-restraint.jpg" alt="Designing an AI Visual Director That Doesn&#39;t Overdo It" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/video-editing/">Video Editing</a>
+    <h3><a href="/ai-visual-director-restraint/">Designing an AI Visual Director That Doesn&#39;t Overdo It</a></h3>
+    <p>Letting AI choose video graphics is easy; stopping it from overdoing them is hard. The rules our Visual Director enforces in code.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/python-video-pipeline-termux/" class="card-img"><img src="/static/img/covers/python-video-pipeline-termux.jpg" alt="Running a Python Video Pipeline in Termux: Setup, Limits and Lessons" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/tutorials/">Tutorials</a>
+    <h3><a href="/python-video-pipeline-termux/">Running a Python Video Pipeline in Termux: Setup, Limits and Lessons</a></h3>
+    <p>Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 3 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/multi-provider-ai-router/" class="card-img"><img src="/static/img/covers/multi-provider-ai-router.jpg" alt="Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-tools/">AI Tools</a>
+    <h3><a href="/multi-provider-ai-router/">Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation</a></h3>
+    <p>A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

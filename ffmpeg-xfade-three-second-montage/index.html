@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)</title>
+<meta name="description" content="Build a 3-second news montage with FFmpeg xfade from Python: segment maths, crossfade chains, low-memory grouping and a crashing transition.">
+<link rel="canonical" href="https://terryje-y.github.io/ffmpeg-xfade-three-second-montage/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)">
+<meta property="og:description" content="Build a 3-second news montage with FFmpeg xfade from Python: segment maths, crossfade chains, low-memory grouping and a crashing transition.">
+<meta property="og:url" content="https://terryje-y.github.io/ffmpeg-xfade-three-second-montage/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/ffmpeg-xfade-three-second-montage.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)", "description": "Build a 3-second news montage with FFmpeg xfade from Python: segment maths, crossfade chains, low-memory grouping and a crashing transition.", "image": ["https://terryje-y.github.io/static/img/covers/ffmpeg-xfade-three-second-montage.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/ffmpeg-xfade-three-second-montage/", "wordCount": 753, "articleSection": "Python & FFmpeg", "keywords": "ffmpeg, xfade, python, montage, editing"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Python & FFmpeg", "item": "https://terryje-y.github.io/category/python-ffmpeg/"}, {"@type": "ListItem", "position": 3, "name": "Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)", "item": "https://terryje-y.github.io/ffmpeg-xfade-three-second-montage/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></nav>
+    <a class="chip" href="/category/python-ffmpeg/">Python &amp; FFmpeg</a>
+    <h1>Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)</h1>
+    <p class="lead">Build a 3-second news montage with FFmpeg xfade from Python: segment maths, crossfade chains, low-memory grouping and a crashing transition.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>4 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/ffmpeg-xfade-three-second-montage.jpg" alt="Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#the-arithmetic-of-a-3-second-rhythm">The arithmetic of a 3-second rhythm</a></li><li><a href="#step-1-normalise-every-segment">Step 1: Normalise every segment</a></li><li><a href="#step-2-chain-the-crossfades">Step 2: Chain the crossfades</a></li><li><a href="#step-3-keep-memory-under-control">Step 3: Keep memory under control</a></li><li><a href="#step-4-rhythm-effects-freeze-zooms-and-black-and-white-beats">Step 4: Rhythm effects - freeze-zooms and black-and-white beats</a></li><li><a href="#the-transition-that-crashed">The transition that crashed</a></li><li><a href="#choosing-transitions-with-taste">Choosing transitions with taste</a></li><li><a href="#summary">Summary</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>Fast news edits have a rhythm: a new shot every few seconds keeps the eye engaged while the narration carries the story. Our engine cuts the background footage every <strong>three seconds</strong>, always. This article shows how to build that montage with FFmpeg&rsquo;s <code>xfade</code> filter from Python, and the problems we solved along the way.</p>
+<h2 id="the-arithmetic-of-a-3-second-rhythm">The arithmetic of a 3-second rhythm</h2>
+<p>We render each shot as a <strong>3.5-second segment</strong> and join consecutive segments with a <strong>0.5-second crossfade</strong>. Because each crossfade overlaps two segments by half a second, a new shot becomes dominant every 3.0 seconds.</p>
+<p>For <code>n</code> segments, the total length is:</p>
+<pre><code class="language-text">total = n × 3.5 − (n − 1) × 0.5 = 3n + 0.5
+</code></pre>
+<p>So the number of segments needed for a narration of length <code>d</code> is <code>ceil((d − 3.5) / 3) + 1</code>. A 65-second short needs 22 segments; a 20-minute video needs about 400.</p>
+<h2 id="step-1-normalise-every-segment">Step 1: Normalise every segment</h2>
+<p>Each source - a video clip or a still image - is rendered to an identical intermediate: same size, frame rate, pixel format and duration. This makes the crossfade step simple and reliable.</p>
+<pre><code class="language-python">def segment(src, out, w, h, start=None, is_image=False, focus_x=0.5):
+    cmd = [&quot;ffmpeg&quot;, &quot;-y&quot;, &quot;-loglevel&quot;, &quot;error&quot;]
+    if is_image:
+        cmd += [&quot;-loop&quot;, &quot;1&quot;, &quot;-framerate&quot;, &quot;30&quot;, &quot;-i&quot;, src, &quot;-t&quot;, &quot;3.5&quot;]
+    else:
+        cmd += [&quot;-ss&quot;, f&quot;{start:.3f}&quot;, &quot;-i&quot;, src, &quot;-t&quot;, &quot;3.5&quot;, &quot;-an&quot;]
+    vf = (f&quot;scale={int(w*1.12)}:{int(h*1.12)}:force_original_aspect_ratio=increase:flags=lanczos,&quot;
+          f&quot;crop={w}:{h}:(iw-ow)*{focus_x:.2f}:(ih-oh)/2,unsharp=5:5:0.6,fps=30,setsar=1,format=yuv420p&quot;)
+    cmd += [&quot;-vf&quot;, vf, &quot;-c:v&quot;, &quot;libx264&quot;, &quot;-preset&quot;, &quot;ultrafast&quot;, &quot;-crf&quot;, &quot;18&quot;, out]
+    subprocess.run(cmd, check=True)
+</code></pre>
+<p>Three details worth copying:</p>
+<ul>
+<li><strong>Cover, then crop.</strong> <code>force_original_aspect_ratio=increase</code> fills the frame; the crop removes the overflow.</li>
+<li><strong>Crop around the subject.</strong> <code>focus_x</code> comes from a vision model&rsquo;s estimate of where the main face is, so vertical crops do not cut people in half.</li>
+<li><strong>High-quality intermediates.</strong> CRF 18 with the <code>ultrafast</code> preset is large but fast, and avoids stacking compression artefacts across several passes.</li>
+</ul>
+<h2 id="step-2-chain-the-crossfades">Step 2: Chain the crossfades</h2>
+<p><code>xfade</code> joins two inputs. Chaining it joins many. The offset for the <em>i</em>-th transition is the running length minus the overlap:</p>
+<pre><code class="language-python">filters = [f&quot;[{i}:v]settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p[v{i}]&quot; for i in range(n)]
+current, elapsed = &quot;[v0]&quot;, 3.5
+for i in range(1, n):
+    offset = elapsed - 0.5
+    filters.append(f&quot;{current}[v{i}]xfade=transition={kinds[i-1]}:duration=0.5:offset={offset:.3f}[x{i}]&quot;)
+    current, elapsed = f&quot;[x{i}]&quot;, offset + 3.5
+</code></pre>
+<p><code>settb=AVTB,setpts=PTS-STARTPTS</code> normalises timestamps, which prevents the most common xfade error: inputs with different time bases.</p>
+<h2 id="step-3-keep-memory-under-control">Step 3: Keep memory under control</h2>
+<p>The first version chained all segments in one filter graph. With 23 inputs that worked on a desktop, but on our phone the process was occasionally killed by Android&rsquo;s low-memory killer, which leaves no error message - just a negative exit code.</p>
+<p>The fix is to crossfade in <strong>groups of eight</strong>, then crossfade the groups. Because each join still overlaps by exactly 0.5 seconds, the result is mathematically identical:</p>
+<pre><code class="language-text">group of 8 segments = 8 × 3.5 − 7 × 0.5 = 24.5 s
+join offset         = 24.5 − 0.5 = 24.0 s = 8 × 3.0   ✓ same cadence
+</code></pre>
+<p>For long YouTube videos we go one level further and render the montage in roughly one-minute chunks, each with its own effects, and then join the chunks the same way. See <a href="/rendering-long-youtube-videos-android/">Rendering Long YouTube Videos on an Android Phone</a>.</p>
+<p>We also made the runner retry once when FFmpeg exits with a negative return code (killed by a signal), with a short pause to let memory recover.</p>
+<h2 id="step-4-rhythm-effects-freeze-zooms-and-black-and-white-beats">Step 4: Rhythm effects - freeze-zooms and black-and-white beats</h2>
+<p>A montage that only crossfades becomes monotonous. Two effects break the pattern:</p>
+<ul>
+<li><strong>Freeze-frame zoom.</strong> Every 24 seconds, starting at 12, we grab a frame, slowly push in on it for six seconds with <code>zoompan</code>, and overlay it on top of the montage. A small animated waveform appears during the freeze.</li>
+<li><strong>Black-and-white beats.</strong> A few four-second windows are desaturated with <code>hue=s=0</code>, enabled only within their time range:</li>
+</ul>
+<pre><code class="language-text">hue=s=0:enable='between(t,31.40,35.40)'
+</code></pre>
+<p>Both effects are positioned with a fixed random seed per video, so re-rendering a video reproduces exactly the same edit.</p>
+<h2 id="the-transition-that-crashed">The transition that crashed</h2>
+<p>Our AI Visual Director can choose different transitions at story turns: smooth slides for whips, <code>zoomin</code> for emphasis, wipes for broadcast style. One day a render failed with exit code −11: a segmentation fault.</p>
+<p>We isolated it by testing each transition on two synthetic clips:</p>
+<pre><code class="language-bash">for k in fade dissolve smoothleft smoothright zoomin wipeleft slideleft slideup slidedown; do
+  ffmpeg -v error -y -i a.mp4 -i b.mp4 -filter_complex \
+    &quot;[0:v]settb=AVTB,format=yuv420p[a];[1:v]settb=AVTB,format=yuv420p[b];[a][b]xfade=transition=$k:duration=0.5:offset=3&quot; \
+    -c:v libx264 -preset ultrafast out.mp4; echo &quot;$k exit=$?&quot;
+done
+</code></pre>
+<p>Every transition passed except <strong><code>slideup</code></strong>, which crashed reliably on that FFmpeg build. The fix had two parts: remove it from the director&rsquo;s options, and add a <strong>whitelist of transitions verified on the target machine</strong>. Anything not on the list falls back to <code>fade</code>. A creative choice should never be able to crash a render.</p>
+<h2 id="choosing-transitions-with-taste">Choosing transitions with taste</h2>
+<p>Not every cut deserves a flashy transition. Our rules:</p>
+<ul>
+<li>crossfades and dissolves within a thought;</li>
+<li>a whip or zoom only at a real story turn, such as the start of a new development;</li>
+<li>never the same strong transition twice in a row;</li>
+<li>&ldquo;classic&rdquo; style uses fades only.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>3.5-second segments with 0.5-second crossfades give a clean 3-second cut rhythm.</li>
+<li>Normalise every intermediate; reset timestamps before <code>xfade</code>.</li>
+<li>Group crossfades to keep memory bounded - the timing does not change.</li>
+<li>Test filters on your actual build, and whitelist what works.</li>
+</ul>
+<p>Next: <a href="/ass-subtitles-motion-graphics-ffmpeg/">Animating News Graphics With ASS Subtitles</a>.</p></div>
+    <p class="tags"><span>#ffmpeg</span><span>#xfade</span><span>#python</span><span>#montage</span><span>#editing</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/ffmpeg-xfade-three-second-montage/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/ffmpeg-xfade-three-second-montage/&text=Building%20a%203-Second%20Montage%20With%20FFmpeg%20xfade%20%28and%20the%20Transition%20That%20Crashed%29" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/ffmpeg-xfade-three-second-montage/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/automated-video-quality-control-ffmpeg/" class="card-img"><img src="/static/img/covers/automated-video-quality-control-ffmpeg.jpg" alt="Automated Quality Control for Generated Videos With ffprobe and FFmpeg" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/python-ffmpeg/">Python &amp; FFmpeg</a>
+    <h3><a href="/automated-video-quality-control-ffmpeg/">Automated Quality Control for Generated Videos With ffprobe and FFmpeg</a></h3>
+    <p>The 30 automated checks we run on generated videos before publishing: format, silence, black frames, captions, sync and leaked AI text.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/ass-subtitles-motion-graphics-ffmpeg/" class="card-img"><img src="/static/img/covers/ass-subtitles-motion-graphics-ffmpeg.jpg" alt="Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a>
+    <h3><a href="/ass-subtitles-motion-graphics-ffmpeg/">Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes</a></h3>
+    <p>Generate broadcast-style motion graphics as ASS subtitle files in Python and burn them into video with FFmpeg - lower thirds, typing and kinetic text.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 5 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/python-video-pipeline-termux/" class="card-img"><img src="/static/img/covers/python-video-pipeline-termux.jpg" alt="Running a Python Video Pipeline in Termux: Setup, Limits and Lessons" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/tutorials/">Tutorials</a>
+    <h3><a href="/python-video-pipeline-termux/">Running a Python Video Pipeline in Termux: Setup, Limits and Lessons</a></h3>
+    <p>Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 3 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

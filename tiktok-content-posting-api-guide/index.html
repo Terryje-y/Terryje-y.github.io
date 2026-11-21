@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit</title>
+<meta name="description" content="Publishing through TikTok&#39;s official Content Posting API: OAuth with PKCE, creator info, chunked uploads, status checks and the audit.">
+<link rel="canonical" href="https://terryje-y.github.io/tiktok-content-posting-api-guide/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit">
+<meta property="og:description" content="Publishing through TikTok&#39;s official Content Posting API: OAuth with PKCE, creator info, chunked uploads, status checks and the audit.">
+<meta property="og:url" content="https://terryje-y.github.io/tiktok-content-posting-api-guide/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/tiktok-content-posting-api-guide.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit", "description": "Publishing through TikTok's official Content Posting API: OAuth with PKCE, creator info, chunked uploads, status checks and the audit.", "image": ["https://terryje-y.github.io/static/img/covers/tiktok-content-posting-api-guide.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/tiktok-content-posting-api-guide/", "wordCount": 785, "articleSection": "Tutorials", "keywords": "tiktok, api, oauth, automation, python"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Tutorials", "item": "https://terryje-y.github.io/category/tutorials/"}, {"@type": "ListItem", "position": 3, "name": "TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit", "item": "https://terryje-y.github.io/tiktok-content-posting-api-guide/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/tutorials/">Tutorials</a></nav>
+    <a class="chip" href="/category/tutorials/">Tutorials</a>
+    <h1>TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit</h1>
+    <p class="lead">Publishing through TikTok&#39;s official Content Posting API: OAuth with PKCE, creator info, chunked uploads, status checks and the audit.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>4 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/tiktok-content-posting-api-guide.jpg" alt="TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#two-ways-to-post">Two ways to post</a></li><li><a href="#the-unaudited-app-restriction">The unaudited-app restriction</a></li><li><a href="#step-1-oauth-with-login-kit">Step 1: OAuth with Login Kit</a></li><li><a href="#step-2-query-creator-info-before-every-post">Step 2: Query creator info before every post</a></li><li><a href="#step-3-initialise-the-post">Step 3: Initialise the post</a></li><li><a href="#step-4-upload-in-chunks">Step 4: Upload in chunks</a></li><li><a href="#step-5-poll-the-status-dont-assume-success">Step 5: Poll the status - don&amp;rsquo;t assume success</a></li><li><a href="#rate-limits-and-caps">Rate limits and caps</a></li><li><a href="#errors-worth-handling-explicitly">Errors worth handling explicitly</a></li><li><a href="#a-checklist-for-your-integration">A checklist for your integration</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>If you want software to publish videos to TikTok, there is exactly one legitimate route: TikTok&rsquo;s official <strong>Content Posting API</strong>. Browser automation and unofficial endpoints break, risk your account and violate the platform&rsquo;s terms. This guide explains how the official flow works, based on implementing it in our engine. API details change, so always confirm against TikTok&rsquo;s developer documentation before shipping.</p>
+<h2 id="two-ways-to-post">Two ways to post</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Endpoint</th>
+<th>Scope</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Direct Post</strong></td>
+<td><code>POST /v2/post/publish/video/init/</code></td>
+<td><code>video.publish</code></td>
+<td>Published to the profile with the privacy you choose</td>
+</tr>
+<tr>
+<td><strong>Upload to Inbox</strong></td>
+<td><code>POST /v2/post/publish/inbox/video/init/</code></td>
+<td><code>video.upload</code></td>
+<td>Arrives as a draft; the creator finishes posting in the app</td>
+</tr>
+</tbody>
+</table></div>
+<p>An inbox upload is <strong>not</strong> a published post. Our dashboard labels these &ldquo;Sent to inbox&rdquo;, never &ldquo;Published&rdquo;.</p>
+<h2 id="the-unaudited-app-restriction">The unaudited-app restriction</h2>
+<p>This is the most important rule to understand before you build anything. Until your app passes TikTok&rsquo;s Content Posting audit:</p>
+<ul>
+<li>Direct Post content is limited to <strong>private (SELF_ONLY)</strong> visibility;</li>
+<li>only a small number of users (five in 24 hours at the time of writing) can post through the app;</li>
+<li>the posting accounts must be private.</li>
+</ul>
+<p>Public posting requires applying for the audit and meeting TikTok&rsquo;s UX and content-sharing guidelines. Plan for this from the start; it is not a technical problem you can code around.</p>
+<h2 id="step-1-oauth-with-login-kit">Step 1: OAuth with Login Kit</h2>
+<p>Users authorise your app through TikTok&rsquo;s authorise page. Desktop apps can use a <code>localhost</code> redirect URI with a port, and must use PKCE. Note that TikTok&rsquo;s desktop flow expects the <strong>hex-encoded</strong> SHA-256 of the verifier as the code challenge.</p>
+<pre><code class="language-python">verifier = secrets.token_urlsafe(64)[:96]
+challenge = hashlib.sha256(verifier.encode()).hexdigest()
+params = {&quot;client_key&quot;: CLIENT_KEY, &quot;scope&quot;: &quot;user.info.basic,video.publish,video.upload&quot;,
+          &quot;response_type&quot;: &quot;code&quot;, &quot;redirect_uri&quot;: REDIRECT_URI, &quot;state&quot;: state,
+          &quot;code_challenge&quot;: challenge, &quot;code_challenge_method&quot;: &quot;S256&quot;}
+url = &quot;https://www.tiktok.com/v2/auth/authorize/?&quot; + urlencode(params)
+</code></pre>
+<p>Exchange the returned <code>code</code> at <code>POST https://open.tiktokapis.com/v2/oauth/token/</code> (form-encoded) for an access token (about 2 hours) and a refresh token (about 180 days).</p>
+<p><strong>Refresh tokens rotate.</strong> Each refresh returns a new refresh token and the old one stops working. Store the new token immediately, or your next refresh fails. Keep tokens encrypted at rest and never send them to a browser.</p>
+<h2 id="step-2-query-creator-info-before-every-post">Step 2: Query creator info before every post</h2>
+<pre><code class="language-http">POST /v2/post/publish/creator_info/query/
+Authorization: Bearer &lt;access_token&gt;
+</code></pre>
+<p>The response tells you the creator&rsquo;s nickname, the <strong>privacy options</strong> they may use, whether comments, duets or stitches are disabled, and the maximum video duration. TikTok&rsquo;s guidelines require you to:</p>
+<ul>
+<li>show the creator&rsquo;s nickname so users know which account they are posting to;</li>
+<li>offer only the returned privacy options, with <strong>no default</strong> - the user must choose;</li>
+<li>respect disabled interaction settings;</li>
+<li>check the video duration against the creator&rsquo;s limit.</li>
+</ul>
+<h2 id="step-3-initialise-the-post">Step 3: Initialise the post</h2>
+<pre><code class="language-json">{
+  &quot;post_info&quot;: {
+    &quot;title&quot;: &quot;Caption with #hashtags (up to 2200 UTF-16 units)&quot;,
+    &quot;privacy_level&quot;: &quot;SELF_ONLY&quot;,
+    &quot;disable_comment&quot;: false, &quot;disable_duet&quot;: false, &quot;disable_stitch&quot;: false,
+    &quot;video_cover_timestamp_ms&quot;: 1200,
+    &quot;brand_content_toggle&quot;: false, &quot;brand_organic_toggle&quot;: false,
+    &quot;is_aigc&quot;: true
+  },
+  &quot;source_info&quot;: {&quot;source&quot;: &quot;FILE_UPLOAD&quot;, &quot;video_size&quot;: 26746102,
+                  &quot;chunk_size&quot;: 10485760, &quot;total_chunk_count&quot;: 2}
+}
+</code></pre>
+<p><code>is_aigc</code> adds TikTok&rsquo;s AI-generated content label. Our narration uses a synthetic voice, so we enable it by default.</p>
+<p>The response contains a <code>publish_id</code> and an <code>upload_url</code>, which is valid for one hour.</p>
+<h2 id="step-4-upload-in-chunks">Step 4: Upload in chunks</h2>
+<p>The chunk rules trip people up:</p>
+<ul>
+<li>files under 5 MB go in a single chunk equal to the file size;</li>
+<li>otherwise chunks are 5-64 MB, <code>total_chunk_count = floor(video_size / chunk_size)</code>, and the <strong>remainder joins the last chunk</strong> (which may be up to 128 MB);</li>
+<li>chunks are uploaded in order with <code>PUT</code> and a <code>Content-Range</code> header.</li>
+</ul>
+<pre><code class="language-python">for i in range(total):
+    first = i * chunk
+    last = size - 1 if i == total - 1 else first + chunk - 1
+    requests.put(upload_url, data=read(first, last), headers={
+        &quot;Content-Type&quot;: &quot;video/mp4&quot;, &quot;Content-Length&quot;: str(last - first + 1),
+        &quot;Content-Range&quot;: f&quot;bytes {first}-{last}/{size}&quot;})
+</code></pre>
+<p>TikTok answers <code>206</code> for a partial upload and <code>201</code> when the upload is complete.</p>
+<h2 id="step-5-poll-the-status-dont-assume-success">Step 5: Poll the status - don&rsquo;t assume success</h2>
+<p>An accepted upload is not a published video. Poll <code>POST /v2/post/publish/status/fetch/</code> with the <code>publish_id</code> until you see <code>PUBLISH_COMPLETE</code>, <code>SEND_TO_USER_INBOX</code> or <code>FAILED</code> (with a <code>fail_reason</code>). Public post IDs appear in a field spelled <code>publicaly_available_post_id</code> in the API, and only after moderation. Only <code>PUBLISH_COMPLETE</code> means &ldquo;published&rdquo;.</p>
+<h2 id="rate-limits-and-caps">Rate limits and caps</h2>
+<p>Initialisation endpoints allow about 6 requests per minute per user token; creator info about 20; status checks about 30. There is also a per-creator daily posting cap shared across all apps. A scheduler that spreads posts across the day, one per account at a time, stays comfortably inside these limits. See <a href="/scheduling-social-video-uploads-safely/">Scheduling Social Video Uploads Safely</a>.</p>
+<h2 id="errors-worth-handling-explicitly">Errors worth handling explicitly</h2>
+<ul>
+<li><code>privacy_level_option_mismatch</code> - you sent a privacy level the creator cannot use.</li>
+<li><code>unaudited_client_can_only_post_to_private_accounts</code> - the audit restriction.</li>
+<li><code>spam_risk_too_many_posts</code> - the creator&rsquo;s cap is reached; try a later slot.</li>
+<li><code>access_token_invalid</code> - refresh, or ask the user to reconnect.</li>
+<li><code>rate_limit_exceeded</code> - back off.</li>
+</ul>
+<h2 id="a-checklist-for-your-integration">A checklist for your integration</h2>
+<ul>
+<li>Official API only; no browser automation.</li>
+<li>PKCE for desktop apps; state parameter checked and single-use.</li>
+<li>Encrypted token storage; rotate refresh tokens immediately.</li>
+<li>Fresh creator-info query before posting; privacy chosen by the user.</li>
+<li>AI-content label when appropriate.</li>
+<li>Chunked upload following the documented rules.</li>
+<li>&ldquo;Published&rdquo; shown only after <code>PUBLISH_COMPLETE</code>.</li>
+<li>Plan for the audit before promising public auto-posting to anyone.</li>
+</ul></div>
+    <p class="tags"><span>#tiktok</span><span>#api</span><span>#oauth</span><span>#automation</span><span>#python</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/tiktok-content-posting-api-guide/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/tiktok-content-posting-api-guide/&text=TikTok%20Content%20Posting%20API%20Explained%3A%20Direct%20Post%2C%20Inbox%20Uploads%20and%20the%20Audit" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/tiktok-content-posting-api-guide/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/scheduling-social-video-uploads-safely/" class="card-img"><img src="/static/img/covers/scheduling-social-video-uploads-safely.jpg" alt="Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/tutorials/">Tutorials</a>
+    <h3><a href="/scheduling-social-video-uploads-safely/">Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts</a></h3>
+    <p>Build a publishing scheduler that never double-posts, never dumps overdue videos at once and survives restarts - fixed slots and SQLite.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/python-video-pipeline-termux/" class="card-img"><img src="/static/img/covers/python-video-pipeline-termux.jpg" alt="Running a Python Video Pipeline in Termux: Setup, Limits and Lessons" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/tutorials/">Tutorials</a>
+    <h3><a href="/python-video-pipeline-termux/">Running a Python Video Pipeline in Termux: Setup, Limits and Lessons</a></h3>
+    <p>Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 3 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/inside-an-ai-news-video-pipeline/" class="card-img"><img src="/static/img/covers/inside-an-ai-news-video-pipeline.jpg" alt="Inside an AI News Video Pipeline: From Headline to Finished Video" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/inside-an-ai-news-video-pipeline/">Inside an AI News Video Pipeline: From Headline to Finished Video</a></h3>
+    <p>How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 5 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

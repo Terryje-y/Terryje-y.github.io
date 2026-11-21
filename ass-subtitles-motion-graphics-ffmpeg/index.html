@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes</title>
+<meta name="description" content="Generate broadcast-style motion graphics as ASS subtitle files in Python and burn them into video with FFmpeg - lower thirds, typing and kinetic text.">
+<link rel="canonical" href="https://terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes">
+<meta property="og:description" content="Generate broadcast-style motion graphics as ASS subtitle files in Python and burn them into video with FFmpeg - lower thirds, typing and kinetic text.">
+<meta property="og:url" content="https://terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/ass-subtitles-motion-graphics-ffmpeg.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes", "description": "Generate broadcast-style motion graphics as ASS subtitle files in Python and burn them into video with FFmpeg - lower thirds, typing and kinetic text.", "image": ["https://terryje-y.github.io/static/img/covers/ass-subtitles-motion-graphics-ffmpeg.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/", "wordCount": 1065, "articleSection": "Remotion & Motion Graphics", "keywords": "ass, libass, ffmpeg, python, typography, tutorial"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Remotion & Motion Graphics", "item": "https://terryje-y.github.io/category/remotion-motion-graphics/"}, {"@type": "ListItem", "position": 3, "name": "Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes", "item": "https://terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></nav>
+    <a class="chip" href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a>
+    <h1>Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes</h1>
+    <p class="lead">Generate broadcast-style motion graphics as ASS subtitle files in Python and burn them into video with FFmpeg - lower thirds, typing and kinetic text.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>5 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/ass-subtitles-motion-graphics-ffmpeg.jpg" alt="Animating News Graphics With ASS Subtitles: Typing, Kinetic Text and Wipes" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#the-ass-file-skeleton">The ASS file skeleton</a></li><li><a href="#helpers-you-will-use-everywhere">Helpers you will use everywhere</a></li><li><a href="#a-lower-third-that-wipes-in">A lower third that wipes in</a></li><li><a href="#a-typing-effect-timed-to-speech">A typing effect timed to speech</a></li><li><a href="#kinetic-words-with-overshoot">Kinetic words with overshoot</a></li><li><a href="#burning-the-graphics-in">Burning the graphics in</a></li><li><a href="#why-a-subtitle-format-works-for-motion-graphics">Why a subtitle format works for motion graphics</a></li><li><a href="#timing-graphics-from-the-narration">Timing graphics from the narration</a></li><li><a href="#organising-layers">Organising layers</a></li><li><a href="#common-pitfalls">Common pitfalls</a></li><li><a href="#design-rules-that-keep-it-professional">Design rules that keep it professional</a></li><li><a href="#summary">Summary</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>This tutorial shows how to generate animated graphics - lower thirds, a typing window, kinetic words and a wipe-in headline - as an ASS subtitle file from Python, and render them over video with FFmpeg. Everything here is plain text generation; no design software is required.</p>
+<p><img loading="lazy" decoding="async" alt="Examples of motion graphics rendered with libass: headline card, development board, name super and captions" src="/static/img/figures/ass-graphics-demo.png" />
+<em>Graphics rendered entirely by libass from a generated subtitle file, on a neutral test background.</em></p>
+<h2 id="the-ass-file-skeleton">The ASS file skeleton</h2>
+<p>An ASS file has a header that defines the canvas, a style section and an events section. Set <code>PlayResX</code>/<code>PlayResY</code> to your design resolution; libass scales to the actual video size.</p>
+<pre><code class="language-text">[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Base,Poppins ExtraBold,60,&amp;H00FFFFFF,&amp;H00FFFFFF,&amp;H00000000,&amp;H80000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+</code></pre>
+<p>Each graphic element is one or more <code>Dialogue:</code> lines with override tags in braces.</p>
+<h2 id="helpers-you-will-use-everywhere">Helpers you will use everywhere</h2>
+<pre><code class="language-python">def ts(t):                      # seconds -&gt; H:MM:SS.cc
+    cs = int(round(max(0, t) * 100))
+    h, cs = divmod(cs, 360000); m, cs = divmod(cs, 6000); s, cs = divmod(cs, 100)
+    return f&quot;{h}:{m:02d}:{s:02d}.{cs:02d}&quot;
+
+def col(hex_rgb, alpha=0):      # &quot;#D7141A&quot; -&gt; &amp;H001A14D7&amp; (ASS is alpha-BGR)
+    r, g, b = hex_rgb[1:3], hex_rgb[3:5], hex_rgb[5:7]
+    return f&quot;&amp;H{alpha:02X}{b}{g}{r}&amp;&quot;.upper()
+
+def dialogue(start, end, text, layer=0):
+    return f&quot;Dialogue: {layer},{ts(start)},{ts(end)},Base,,0,0,0,,{text}&quot;
+
+def rect(w, h):                 # vector rectangle for \p1 drawing mode
+    return f&quot;m 0 0 l {w} 0 l {w} {h} l 0 {h}&quot;
+</code></pre>
+<p>Colours are the classic gotcha: ASS writes them as <strong>alpha, blue, green, red</strong>, and alpha 00 means fully opaque.</p>
+<h2 id="a-lower-third-that-wipes-in">A lower third that wipes in</h2>
+<p>A lower third is a coloured box plus text. The wipe is an animated clip rectangle: it starts zero pixels wide and grows to the full width in 320 ms.</p>
+<pre><code class="language-python">def lower_third(name, start, end, x=54, y=1114, width=420):
+    box = (f&quot;{{\\an7\\pos({x},{y})\\bord0\\shad0\\1c{col('#0B0B12')}&quot;
+           f&quot;\\clip({x},{y},{x},{y+90})\\t(0,320,\\clip({x},{y},{x+width},{y+90}))\\p1}}{rect(width, 88)}&quot;)
+    bar = f&quot;{{\\an7\\pos({x-14},{y})\\bord0\\1c{col('#D7141A')}\\fad(100,200)\\p1}}{rect(14, 88)}&quot;
+    text = f&quot;{{\\an7\\pos({x+22},{y+10})\\fnAnton\\fs75\\1c{col('#FFFFFF')}\\fad(160,200)}}{name.upper()}&quot;
+    return [dialogue(start, end, bar, 30), dialogue(start, end, box, 30), dialogue(start + 0.16, end, text, 31)]
+</code></pre>
+<p>Layers control stacking: higher layers draw on top. Keep a layer plan (background plates 30, text 31, and so on) so elements never fight.</p>
+<h2 id="a-typing-effect-timed-to-speech">A typing effect timed to speech</h2>
+<p>A typing window shows a statement appearing character by character. The simplest robust method is one event per step, each showing the text typed so far. Natural rhythm comes from weighting pauses after spaces and punctuation:</p>
+<pre><code class="language-python">def typing(x, y, text, start, duration, seed=0):
+    rng = random.Random(seed)
+    weights = [1 + rng.uniform(-.35, .35) + (.6 if c == &quot; &quot; else 0) + (2.2 if c in &quot;,.;:!?&quot; else 0) for c in text]
+    total, acc, events, shown = sum(weights), 0.0, [], &quot;&quot;
+    prev = start
+    for c, w in zip(text, weights):
+        acc += duration * w / total
+        t = start + acc
+        if shown:
+            events.append(dialogue(prev, t, f&quot;{{\\an7\\pos({x},{y})\\fnPoppins Bold\\fs52}}{shown}&quot;, 63))
+        shown += c
+        prev = t
+    return events
+</code></pre>
+<p>Add a blinking cursor as a separate thin rectangle that follows the end of the text, and you have a convincing &ldquo;statement being typed&rdquo; moment. We start typing on the word timing from our narration timeline, so the text lands as the narrator says it.</p>
+<h2 id="kinetic-words-with-overshoot">Kinetic words with overshoot</h2>
+<p>Kinetic typography makes two to five words pop in one at a time, each on its spoken word. The pop is a scale transform that overshoots and settles:</p>
+<pre><code class="language-python">pop = &quot;\\fscx60\\fscy60\\t(0,110,\\fscx112\\fscy112)\\t(110,200,\\fscx100\\fscy100)\\fad(40,180)&quot;
+</code></pre>
+<p>Keep animation short (around 200 ms) and avoid bouncing more than once. Overshoot reads as energy; repeated bouncing reads as childish.</p>
+<h2 id="burning-the-graphics-in">Burning the graphics in</h2>
+<pre><code class="language-bash">ffmpeg -i background.mp4 -i narration.wav \
+  -filter_complex &quot;[0:v]ass=graphics.ass:fontsdir=./fonts,format=yuv420p[v]&quot; \
+  -map &quot;[v]&quot; -map 1:a -c:v libx264 -preset veryfast -crf 20 -c:a aac -b:a 192k out.mp4
+</code></pre>
+<p><code>fontsdir</code> points libass at your bundled font files, so the output looks the same on every machine. Escape colons and quotes in the path if your filenames contain them.</p>
+<h2 id="why-a-subtitle-format-works-for-motion-graphics">Why a subtitle format works for motion graphics</h2>
+<p>It helps to think of an ASS file as a timeline of layers rather than as subtitles. Every <code>Dialogue</code> line has a start time, an end time, a layer number and a block of override tags that describe position, colour, size, rotation, clipping and animation. When FFmpeg renders a frame, libass draws every event that is active at that moment, lowest layer first. That is exactly the model a motion designer uses in an editing program: stacked layers that appear, animate and disappear.</p>
+<p>Because the file is plain text, a program can write it from data. In our engine the data comes from the narration: each word has a start and end time, each development has an anchor phrase, and each person has the moment their name is first spoken. Graphics are simply that data translated into events.</p>
+<h2 id="timing-graphics-from-the-narration">Timing graphics from the narration</h2>
+<p>The most important rule for automated graphics is that they follow speech, not a fixed grid. A lower third for a person should appear when the narrator first says their name and stay for three to four seconds. A development board should appear on the first word of that development. A typing window should start typing as the sentence begins and finish slightly before the sentence ends, so the viewer reads along with the voice.</p>
+<p>To make this work, keep one function that looks up the start time of a phrase in your word timeline, and use it everywhere. If the phrase cannot be found - because the model paraphrased it, for example - skip the graphic rather than guess a time. A missing graphic is invisible; a graphic at the wrong moment is a visible mistake.</p>
+<h2 id="organising-layers">Organising layers</h2>
+<p>Decide your layer plan once and stick to it. We use low layers for frames and background plates, the middle range for information graphics such as boards and name supers, higher layers for emphasis effects such as full-screen punch lines, and the highest layers for transitional accents. When two graphics overlap in time, the layer plan guarantees which one is on top, and a simple region check (one element per screen area at a time) guarantees they do not collide visually.</p>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<ul>
+<li><strong>Wrong colour order.</strong> If your red comes out blue, you wrote RGB instead of BGR.</li>
+<li><strong>Text that does not fit.</strong> libass does not resize boxes to fit text. Measure text with the real font file and calibrate the measurement against an actual render before you draw panels.</li>
+<li><strong>Escaping.</strong> Curly braces and backslashes inside user text break override blocks. Replace them before writing the event.</li>
+<li><strong>Clipped descenders.</strong> A clip rectangle exactly one line tall cuts off the bottoms of letters such as g, p and y during wipes. Make it taller.</li>
+<li><strong>Too many events.</strong> Per-character typing for a long paragraph creates hundreds of events. That is fine for libass, but keep typing windows to one or two sentences for readability.</li>
+<li><strong>Font names.</strong> Use the family or full font name exactly as stored in the font file, and point FFmpeg at the folder with <code>fontsdir</code> so the render does not silently fall back to a default font.</li>
+</ul>
+<h2 id="design-rules-that-keep-it-professional">Design rules that keep it professional</h2>
+<ul>
+<li><strong>Two typefaces.</strong> A condensed display face (we use Anton) for headlines, a geometric sans (Poppins) for everything else.</li>
+<li><strong>A small palette.</strong> One red, one yellow, near-black panels, white text.</li>
+<li><strong>Safe zones.</strong> On vertical video, keep text out of the top ~150 px and bottom ~400 px, and away from the right edge where platform buttons sit.</li>
+<li><strong>One element per screen region at a time.</strong> Our Visual Director enforces this automatically; see <a href="/ai-visual-director-restraint/">Designing an AI Visual Director</a>.</li>
+<li><strong>Measure text.</strong> Calibrate a measuring function against real libass output before laying out boxes.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>ASS subtitles are a complete, fast motion-graphics system hiding in plain sight. With a dozen helper functions you can generate lower thirds, typing windows, kinetic text, wipes, pins and arrows directly from your pipeline&rsquo;s data, and render them in the same FFmpeg pass as your footage.</p></div>
+    <p class="tags"><span>#ass</span><span>#libass</span><span>#ffmpeg</span><span>#python</span><span>#typography</span><span>#tutorial</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/&text=Animating%20News%20Graphics%20With%20ASS%20Subtitles%3A%20Typing%2C%20Kinetic%20Text%20and%20Wipes" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/ass-subtitles-motion-graphics-ffmpeg/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/remotion-vs-libass-motion-graphics/" class="card-img"><img src="/static/img/covers/remotion-vs-libass-motion-graphics.jpg" alt="Remotion vs libass: Choosing a Motion Graphics Renderer for Automated Video" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a>
+    <h3><a href="/remotion-vs-libass-motion-graphics/">Remotion vs libass: Choosing a Motion Graphics Renderer for Automated Video</a></h3>
+    <p>Remotion rendered at 11 seconds per second of video on our hardware, so automated news graphics moved to libass. A measured comparison.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/ffmpeg-xfade-three-second-montage/" class="card-img"><img src="/static/img/covers/ffmpeg-xfade-three-second-montage.jpg" alt="Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/python-ffmpeg/">Python &amp; FFmpeg</a>
+    <h3><a href="/ffmpeg-xfade-three-second-montage/">Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)</a></h3>
+    <p>Build a 3-second news montage with FFmpeg xfade from Python: segment maths, crossfade chains, low-memory grouping and a crashing transition.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/automated-video-quality-control-ffmpeg/" class="card-img"><img src="/static/img/covers/automated-video-quality-control-ffmpeg.jpg" alt="Automated Quality Control for Generated Videos With ffprobe and FFmpeg" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/python-ffmpeg/">Python &amp; FFmpeg</a>
+    <h3><a href="/automated-video-quality-control-ffmpeg/">Automated Quality Control for Generated Videos With ffprobe and FFmpeg</a></h3>
+    <p>The 30 automated checks we run on generated videos before publishing: format, silence, black frames, captions, sync and leaked AI text.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

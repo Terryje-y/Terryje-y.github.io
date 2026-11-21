@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside an AI News Video Pipeline: From Headline to Finished Video</title>
+<meta name="description" content="How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.">
+<link rel="canonical" href="https://terryje-y.github.io/inside-an-ai-news-video-pipeline/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Inside an AI News Video Pipeline: From Headline to Finished Video">
+<meta property="og:description" content="How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.">
+<meta property="og:url" content="https://terryje-y.github.io/inside-an-ai-news-video-pipeline/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/inside-an-ai-news-video-pipeline.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Inside an AI News Video Pipeline: From Headline to Finished Video", "description": "How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.", "image": ["https://terryje-y.github.io/static/img/covers/inside-an-ai-news-video-pipeline.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/inside-an-ai-news-video-pipeline/", "wordCount": 1063, "articleSection": "AI News Automation", "keywords": "architecture, automation, pipeline, youtube, tiktok"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "AI News Automation", "item": "https://terryje-y.github.io/category/ai-news-automation/"}, {"@type": "ListItem", "position": 3, "name": "Inside an AI News Video Pipeline: From Headline to Finished Video", "item": "https://terryje-y.github.io/inside-an-ai-news-video-pipeline/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/ai-news-automation/">AI News Automation</a></nav>
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h1>Inside an AI News Video Pipeline: From Headline to Finished Video</h1>
+    <p class="lead">How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>5 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/inside-an-ai-news-video-pipeline.jpg" alt="Inside an AI News Video Pipeline: From Headline to Finished Video" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#the-input-a-human-written-headline">The input: a human-written headline</a></li><li><a href="#stage-1-script-generation-with-guard-rails">Stage 1: Script generation with guard-rails</a></li><li><a href="#stage-2-cleaning-the-text-before-speech">Stage 2: Cleaning the text before speech</a></li><li><a href="#stage-3-narration">Stage 3: Narration</a></li><li><a href="#stage-4-word-level-timing">Stage 4: Word-level timing</a></li><li><a href="#stage-5-footage-intelligence">Stage 5: Footage intelligence</a></li><li><a href="#stage-6-the-visual-plan">Stage 6: The visual plan</a></li><li><a href="#stage-7-rendering">Stage 7: Rendering</a></li><li><a href="#stage-8-quality-control-then-scheduling">Stage 8: Quality control, then scheduling</a></li><li><a href="#what-we-learned-designing-it-this-way">What we learned designing it this way</a></li><li><a href="#where-to-go-next">Where to go next</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>When people hear &ldquo;AI-generated news video&rdquo;, they usually imagine one magic model that takes a prompt and returns a finished clip. Production reality is very different. Our News AI Engine is a chain of small, boring, testable stages - and almost every quality problem we have ever had came from the seams between them.</p>
+<p>This article walks through the whole pipeline, the way it runs today, and explains why each stage exists.</p>
+<p><img loading="lazy" decoding="async" alt="Diagram of the News AI Engine pipeline from headline to published video" src="/static/img/figures/pipeline.png" />
+<em>The eight stages of the pipeline. Each stage saves its output, so a crash never forces a full restart.</em></p>
+<h2 id="the-input-a-human-written-headline">The input: a human-written headline</h2>
+<p>Everything starts with a title written by a person. That is a deliberate design decision. The engine is very good at turning a headline into a structured script, but deciding <em>what is news</em> - and wording it fairly - is an editorial judgement we never hand to a model.</p>
+<p>The headline is never rewritten by the system. It is shown on screen exactly as typed, and the script must address it.</p>
+<h2 id="stage-1-script-generation-with-guard-rails">Stage 1: Script generation with guard-rails</h2>
+<p>A language model writes the narration. The prompt does three jobs:</p>
+<ol>
+<li><strong>Structure</strong> - a hook in the first sentence, context, two or three distinct developments, and a strong close.</li>
+<li><strong>Length</strong> - we target a speaking time, not a word count. Our narrator voice averages about 140 words per minute, so a 65-second short needs roughly 155 words.</li>
+<li><strong>Factual boundaries</strong> - no invented quotes, numbers, meetings, documents or court decisions. Unconfirmed claims must be attributed (&ldquo;reports say…&rdquo;).</li>
+</ol>
+<p>The model returns structured JSON rather than free text: the narration paragraphs, plus &ldquo;anchors&rdquo; - exact phrases where each development begins. Those anchors become important later, when graphics must appear at the moment words are spoken.</p>
+<p>Every response is validated. If the narration is too short, opens with filler such as &ldquo;In this video…&rdquo;, or contains headings and stage directions, the router rejects it and asks again - once - with the exact reason. We cover the router in detail in <a href="/multi-provider-ai-router/">Building a Multi-Provider AI Router</a>.</p>
+<h2 id="stage-2-cleaning-the-text-before-speech">Stage 2: Cleaning the text before speech</h2>
+<p>A surprising number of AI scripts contain text that should never be spoken: section headings, <code>[SCENE START]</code>, citation markers, and even notes like <em>&ldquo;I could not verify this headline&rdquo;</em>. If that reaches the text-to-speech engine, the narrator reads it aloud. A dedicated cleaner strips it and keeps any editorial warnings for a human to read. See <a href="/stop-ai-preambles-reaching-tts/">Stop AI Preambles From Reaching Your Text-to-Speech</a>.</p>
+<h2 id="stage-3-narration">Stage 3: Narration</h2>
+<p>The cleaned script goes to a synthetic voice with a fixed, approved voice profile. We do not change speed or pitch in post-production: consistency of the voice is part of the channel&rsquo;s identity, and time-stretching audio makes it sound artificial.</p>
+<h2 id="stage-4-word-level-timing">Stage 4: Word-level timing</h2>
+<p>This is the stage most tutorials skip, and the one that makes the biggest visual difference. We run speech recognition (whisper.cpp) on the narration and align every recognised word to the <em>known</em> script text. The result is a timeline where each word has a start and end time - typically matching 94-97% of words directly, with the rest interpolated.</p>
+<p>With that timeline, captions highlight the word being spoken, and a &ldquo;Development 02&rdquo; board appears on the exact syllable where the narrator begins that development. Full details: <a href="/forced-alignment-whisper-cpp-captions/">Forced Alignment With whisper.cpp</a>.</p>
+<h2 id="stage-5-footage-intelligence">Stage 5: Footage intelligence</h2>
+<p>The engine keeps a library of video clips and images per channel. A vision model describes each clip once - setting, people, on-screen text, where the main subject sits in the frame - and the results are cached. For each three-second slot in the edit, the engine scores clips against the sentence being spoken. See <a href="/ai-visual-scanning-footage-library/">AI Visual Scanning of a Footage Library</a>.</p>
+<h2 id="stage-6-the-visual-plan">Stage 6: The visual plan</h2>
+<p>A &ldquo;Visual Director&rdquo; decides which graphics appear and when: name supers, location tags, typing windows, kinetic text, stat cards. It is deliberately restrained - creative graphics may cover at most about 45% of the runtime, never two in the same screen region, never the same type twice in a row. We explain why in <a href="/ai-visual-director-restraint/">Designing an AI Visual Director That Doesn&rsquo;t Overdo It</a>.</p>
+<h2 id="stage-7-rendering">Stage 7: Rendering</h2>
+<p>FFmpeg does all the rendering:</p>
+<ul>
+<li>a montage that cuts every three seconds with half-second crossfades;</li>
+<li>occasional freeze-frame zooms and black-and-white moments for rhythm;</li>
+<li>motion graphics drawn by libass from a generated subtitle file;</li>
+<li>the narration mixed on top.</li>
+</ul>
+<p>Vertical 9:16 videos and widescreen 16:9 videos use the same engine with different layouts. See <a href="/ffmpeg-xfade-three-second-montage/">Building a 3-Second Montage With FFmpeg xfade</a>.</p>
+<h2 id="stage-8-quality-control-then-scheduling">Stage 8: Quality control, then scheduling</h2>
+<p>Before anything can be published, about thirty automated checks run: dimensions, codecs, audio levels, long silences, black frames, caption width, development-board sync, and whether any AI meta-text survived into the narration. A failed check blocks automatic publishing. See <a href="/automated-video-quality-control-ffmpeg/">Automated Quality Control for Generated Videos</a>.</p>
+<p>Publishing is handled by a database-backed scheduler with fixed daily slots and strict idempotency, covered in <a href="/scheduling-social-video-uploads-safely/">Scheduling Social Video Uploads Safely</a>.</p>
+<h2 id="what-we-learned-designing-it-this-way">What we learned designing it this way</h2>
+<p><strong>Persist every stage.</strong> Each stage writes its output to disk and records its status in a database. If the phone reboots in the middle of a render, the job resumes at the render - the script, voice and timing are not regenerated or paid for twice.</p>
+<p><strong>Validate at boundaries.</strong> Most of our worst bugs were not in a model; they were in what one stage passed to the next.</p>
+<p><strong>Keep humans where judgement lives.</strong> Titles, publishing decisions and fact-checking stay with people. The engine removes repetitive work; it does not remove responsibility.</p>
+<p><strong>Measure on real hardware.</strong> Our engine has run on an Android phone. That forced us to care about memory, render time and storage in ways a cloud server would have hidden - and made the system better.</p>
+<h2 id="where-to-go-next">Where to go next</h2>
+<p>If you are building something similar, start with the stage that hurts most. For most creators that is either unreliable AI responses (<a href="/multi-provider-ai-router/">the router</a>) or captions that drift out of sync (<a href="/forced-alignment-whisper-cpp-captions/">forced alignment</a>).</p></div>
+    <p class="tags"><span>#architecture</span><span>#automation</span><span>#pipeline</span><span>#youtube</span><span>#tiktok</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/inside-an-ai-news-video-pipeline/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/inside-an-ai-news-video-pipeline/&text=Inside%20an%20AI%20News%20Video%20Pipeline%3A%20From%20Headline%20to%20Finished%20Video" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/inside-an-ai-news-video-pipeline/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/ai-script-generation-news-guardrails/" class="card-img"><img src="/static/img/covers/ai-script-generation-news-guardrails.jpg" alt="AI Script Generation for News Videos: Structure, Length and Factual Guard-rails" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/ai-script-generation-news-guardrails/">AI Script Generation for News Videos: Structure, Length and Factual Guard-rails</a></h3>
+    <p>How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/stop-ai-preambles-reaching-tts/" class="card-img"><img src="/static/img/covers/stop-ai-preambles-reaching-tts.jpg" alt="Stop AI Preambles From Reaching Your Text-to-Speech" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/stop-ai-preambles-reaching-tts/">Stop AI Preambles From Reaching Your Text-to-Speech</a></h3>
+    <p>Headings, stage directions and &#39;Here is your script&#39; notes were read aloud by our narrator. The cleaner that keeps only speakable text.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 3 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/tiktok-content-posting-api-guide/" class="card-img"><img src="/static/img/covers/tiktok-content-posting-api-guide.jpg" alt="TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/tutorials/">Tutorials</a>
+    <h3><a href="/tiktok-content-posting-api-guide/">TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit</a></h3>
+    <p>Publishing through TikTok&#39;s official Content Posting API: OAuth with PKCE, creator info, chunked uploads, status checks and the audit.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>

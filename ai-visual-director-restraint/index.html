@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designing an AI Visual Director That Doesn&#39;t Overdo It</title>
+<meta name="description" content="Letting AI choose video graphics is easy; stopping it from overdoing them is hard. The rules our Visual Director enforces in code.">
+<link rel="canonical" href="https://terryje-y.github.io/ai-visual-director-restraint/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f19">
+<meta property="og:site_name" content="News AI Engine">
+<meta property="og:title" content="Designing an AI Visual Director That Doesn&#39;t Overdo It">
+<meta property="og:description" content="Letting AI choose video graphics is easy; stopping it from overdoing them is hard. The rules our Visual Director enforces in code.">
+<meta property="og:url" content="https://terryje-y.github.io/ai-visual-director-restraint/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://terryje-y.github.io/static/img/covers/ai-visual-director-restraint.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
+<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Designing an AI Visual Director That Doesn't Overdo It", "description": "Letting AI choose video graphics is easy; stopping it from overdoing them is hard. The rules our Visual Director enforces in code.", "image": ["https://terryje-y.github.io/static/img/covers/ai-visual-director-restraint.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/ai-visual-director-restraint/", "wordCount": 793, "articleSection": "Video Editing", "keywords": "ai, editing, motion-graphics, design, automation"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Video Editing", "item": "https://terryje-y.github.io/category/video-editing/"}, {"@type": "ListItem", "position": 3, "name": "Designing an AI Visual Director That Doesn't Overdo It", "item": "https://terryje-y.github.io/ai-visual-director-restraint/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
+    <nav id="nav" class="nav" aria-label="Topics">
+      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
+      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="post">
+  <div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/video-editing/">Video Editing</a></nav>
+    <a class="chip" href="/category/video-editing/">Video Editing</a>
+    <h1>Designing an AI Visual Director That Doesn&#39;t Overdo It</h1>
+    <p class="lead">Letting AI choose video graphics is easy; stopping it from overdoing them is hard. The rules our Visual Director enforces in code.</p>
+    <div class="byline">
+      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
+      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
+      
+      <span>4 min read</span>
+    </div>
+  </div>
+  <div class="wrap mid"><img class="cover" src="/static/img/covers/ai-visual-director-restraint.jpg" alt="Designing an AI Visual Director That Doesn&#39;t Overdo It" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap narrow">
+    
+    <details class="toc" open><summary>In this article</summary><ol>
+      <li><a href="#two-kinds-of-graphics">Two kinds of graphics</a></li><li><a href="#what-the-ai-is-asked-to-do">What the AI is asked to do</a></li><li><a href="#rule-1-never-invent-on-screen-text">Rule 1: Never invent on-screen text</a></li><li><a href="#rule-2-one-element-per-screen-region">Rule 2: One element per screen region</a></li><li><a href="#rule-3-a-runtime-budget">Rule 3: A runtime budget</a></li><li><a href="#rule-4-breathing-room-and-variety">Rule 4: Breathing room and variety</a></li><li><a href="#rule-5-strong-transitions-are-special">Rule 5: Strong transitions are special</a></li><li><a href="#rule-6-reproducibility">Rule 6: Reproducibility</a></li><li><a href="#when-the-ai-is-unavailable">When the AI is unavailable</a></li><li><a href="#styles-are-just-different-rule-settings">Styles are just different rule settings</a></li><li><a href="#takeaways">Takeaways</a></li>
+    </ol></details>
+    
+    <div class="prose"><p>When we first let a language model plan graphics for our videos, the results were technically impressive and visually exhausting: a typing window, then kinetic text, then a full-screen quote, then an arrow - in the first fifteen seconds. Good editors know that <strong>footage needs room to breathe</strong>. This article describes how our Visual Director combines AI suggestions with hard rules so the result looks edited rather than decorated.</p>
+<h2 id="two-kinds-of-graphics">Two kinds of graphics</h2>
+<p>We split graphics into two groups with very different rules.</p>
+<p><strong>Hard-synced information graphics</strong> appear exactly when something is said, every time:</p>
+<ul>
+<li>the numbered development board (&ldquo;Development 02 - Labour pressure&rdquo;) at the first word of that development;</li>
+<li>a name super at the first mention of a person;</li>
+<li>location and date tags when a place or date is spoken.</li>
+</ul>
+<p>These come straight from the script&rsquo;s structure and the <a href="/forced-alignment-whisper-cpp-captions/">word timeline</a>. The AI cannot move them.</p>
+<p><strong>Creative graphics</strong> are optional emphasis: typing windows, kinetic text, full-screen punch lines, highlighter bars, notifications, arrows, timelines, comparisons and stat cards. The AI suggests these; the rules decide whether they are allowed.</p>
+<h2 id="what-the-ai-is-asked-to-do">What the AI is asked to do</h2>
+<p>The model receives the narration split into timed sentences and a catalogue of graphics with their requirements. For example, a typing window needs 6-16 words copied from the sentence; a stat card needs a number that is actually spoken. It returns a plan like this:</p>
+<pre><code class="language-json">{&quot;plan&quot;: [
+  {&quot;sentence&quot;: 3, &quot;graphic&quot;: &quot;stat&quot;, &quot;value&quot;: &quot;thirty percent&quot;, &quot;text&quot;: &quot;Inflation sits above&quot;, &quot;transition&quot;: &quot;fade&quot;},
+  {&quot;sentence&quot;: 5, &quot;graphic&quot;: &quot;none&quot;, &quot;transition&quot;: &quot;dissolve&quot;},
+  {&quot;sentence&quot;: 7, &quot;graphic&quot;: &quot;typing_window&quot;, &quot;title&quot;: &quot;REPORT&quot;, &quot;text&quot;: &quot;The National Assembly approved a supplementary budget&quot;, &quot;transition&quot;: &quot;whip&quot;}
+]}
+</code></pre>
+<p>The prompt explicitly asks for restraint - &ldquo;leave many sentences with none so the footage carries the scene&rdquo; - but we never rely on the prompt alone.</p>
+<h2 id="rule-1-never-invent-on-screen-text">Rule 1: Never invent on-screen text</h2>
+<p>Every quoted phrase in a creative graphic must appear verbatim in the narration. If the model paraphrases or invents, that graphic is dropped:</p>
+<pre><code class="language-python">probe = normalise(item[&quot;text&quot;])
+if probe not in normalise(narration):
+    item[&quot;graphic&quot;] = &quot;none&quot;
+</code></pre>
+<p>On-screen words carry authority. In news, a misquoted phrase on screen is worse than no graphic at all.</p>
+<h2 id="rule-2-one-element-per-screen-region">Rule 2: One element per screen region</h2>
+<p>The screen is divided into named regions - top band, top-left, top-right, middle, lower band, and &ldquo;full band&rdquo; for full-screen moments. Every graphic type declares the regions it occupies. Before placing a graphic, the director checks the timeline:</p>
+<pre><code class="language-python">def free(self, start, end, regions):
+    for s, e, r, _ in self.items:
+        if start &lt; e and s &lt; end and (r &amp; regions or &quot;band_full&quot; in r or &quot;band_full&quot; in regions):
+            return False
+    return True
+</code></pre>
+<p>Hard-synced graphics are placed first, so a creative graphic can never cover a development board.</p>
+<h2 id="rule-3-a-runtime-budget">Rule 3: A runtime budget</h2>
+<p>Creative graphics may cover at most <strong>45%</strong> of a dynamic video&rsquo;s runtime - 20% in the restrained broadcast style. Once the budget is spent, remaining suggestions are ignored. Our quality control also fails a video if creative graphics exceed half the runtime.</p>
+<h2 id="rule-4-breathing-room-and-variety">Rule 4: Breathing room and variety</h2>
+<ul>
+<li>At least 1.2 seconds between creative graphics.</li>
+<li>Never the same type twice in a row.</li>
+<li>Per-type caps (for example, one full-screen punch line per short), scaled up gently for long videos.</li>
+<li>No creative graphics during the opening title card on widescreen videos.</li>
+</ul>
+<h2 id="rule-5-strong-transitions-are-special">Rule 5: Strong transitions are special</h2>
+<p>The director also picks transitions for the 3-second cuts. Whips and zooms are reserved for story turns, such as the start of a development; inside a thought, cuts use fades and dissolves. A strong transition is never repeated back-to-back, and roughly half of the AI&rsquo;s strong-transition suggestions are softened to keep them meaningful.</p>
+<h2 id="rule-6-reproducibility">Rule 6: Reproducibility</h2>
+<p>Every random choice - a variant of the headline animation, a caption style, a tie-break - uses a random generator seeded from the video&rsquo;s ID. If a render fails and is retried, it produces the identical edit. This makes bugs reproducible and keeps the review copy identical to the published one.</p>
+<h2 id="when-the-ai-is-unavailable">When the AI is unavailable</h2>
+<p>Language models are sometimes overloaded. The director then falls back to a rule-based planner that uses the script&rsquo;s key phrases, numbers and people. For long videos the AI plans in windows of about 28 sentences; if one window fails, the rest go straight to the rules instead of waiting on an overloaded provider again. The video is still made, still synced, just a little less inventive.</p>
+<p>If the AI is <em>too</em> conservative and places fewer than three creative graphics in a short, the rule planner tops it up - within the same budget and region limits.</p>
+<h2 id="styles-are-just-different-rule-settings">Styles are just different rule settings</h2>
+<p>Our three editing styles share the director and differ only in configuration:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Style</th>
+<th>Creative graphics</th>
+<th>Transitions</th>
+<th>Captions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classic</td>
+<td>none (boards only)</td>
+<td>fades</td>
+<td>plain</td>
+</tr>
+<tr>
+<td>Broadcast</td>
+<td>banner and stats, 20% budget</td>
+<td>wipes at developments</td>
+<td>active word highlighted</td>
+</tr>
+<tr>
+<td>Dynamic</td>
+<td>AI-chosen, 45% budget</td>
+<td>context-aware variety</td>
+<td>active word boxed</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="takeaways">Takeaways</h2>
+<ul>
+<li>Separate <strong>information</strong> (always synced, never optional) from <strong>emphasis</strong> (optional, budgeted).</li>
+<li>Validate every AI suggestion against the narration and the screen layout.</li>
+<li>Encode taste as rules: budgets, gaps, regions, variety.</li>
+<li>Seed randomness per video.</li>
+</ul>
+<p>Restraint is not a limitation of an automated editor. It is the feature that makes the result watchable.</p></div>
+    <p class="tags"><span>#ai</span><span>#editing</span><span>#motion-graphics</span><span>#design</span><span>#automation</span></p>
+    <aside class="author">
+      <img src="/static/img/logo.svg" alt="" width="56" height="56">
+      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+        <a href="/editorial-policy/">How we write and test our articles</a></div>
+    </aside>
+    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/ai-visual-director-restraint/">Copy link</button>
+      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/ai-visual-director-restraint/&text=Designing%20an%20AI%20Visual%20Director%20That%20Doesn%27t%20Overdo%20It" rel="noopener" target="_blank">Share on X</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/ai-visual-director-restraint/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
+  </div>
+  
+  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
+  <a href="/forced-alignment-whisper-cpp-captions/" class="card-img"><img src="/static/img/covers/forced-alignment-whisper-cpp-captions.jpg" alt="Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/video-editing/">Video Editing</a>
+    <h3><a href="/forced-alignment-whisper-cpp-captions/">Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone</a></h3>
+    <p>Time every spoken word for captions and graphics by aligning whisper.cpp word timestamps to your known script - running on a phone.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/inside-an-ai-news-video-pipeline/" class="card-img"><img src="/static/img/covers/inside-an-ai-news-video-pipeline.jpg" alt="Inside an AI News Video Pipeline: From Headline to Finished Video" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
+    <h3><a href="/inside-an-ai-news-video-pipeline/">Inside an AI News Video Pipeline: From Headline to Finished Video</a></h3>
+    <p>How our News AI Engine turns one headline into a narrated, edited, quality-checked video - every stage explained, with the trade-offs.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 5 min read</span>
+  </div>
+</article><article class="card">
+  <a href="/ffmpeg-xfade-three-second-montage/" class="card-img"><img src="/static/img/covers/ffmpeg-xfade-three-second-montage.jpg" alt="Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <div class="card-body">
+    <a class="chip" href="/category/python-ffmpeg/">Python &amp; FFmpeg</a>
+    <h3><a href="/ffmpeg-xfade-three-second-montage/">Building a 3-Second Montage With FFmpeg xfade (and the Transition That Crashed)</a></h3>
+    <p>Build a 3-second news montage with FFmpeg xfade from Python: segment maths, crossfade chains, low-memory grouping and a crashing transition.</p>
+    <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+  </div>
+</article></div></section>
+  
+</article>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
+      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
+      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+    </div>
+    <div>
+      <h2>Topics</h2>
+      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+    </div>
+    <div>
+      <h2>About</h2>
+      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+</footer>
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">OK</button>
+</div>
+<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+</body>
+</html>
