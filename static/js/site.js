@@ -19,7 +19,7 @@
     cookie.hidden = false;
     document.getElementById("cookie-ok").addEventListener("click", () => {
       try { localStorage.setItem("cookie_ok", "1"); } catch (e) { /* ignore */ }
-      cookie.hidden = true;
+      cookie.hidden = true; cookie.style.display = "none"; cookie.remove();
     });
   }
 
