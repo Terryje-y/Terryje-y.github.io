@@ -138,22 +138,44 @@ Return JSON with keys:
     if (!script) { alert("Write or paste a script in step 1 first."); return; }
     const btn = $("genVoice"); busy(btn, true, "Recording voice…");
     try {
-      // Only the script is ever sent as text to speak. Accent / delivery go in a separate, never-spoken instruction.
+      // Only the script is spoken. Accent + delivery go in the separate "style" field (the same Style box as
+      // Google AI Studio's speech playground) - the voice follows it but never reads it aloud.
       const style = $("vstyle").value.trim(), accent = $("accent").value;
-      const guide = [accent && `Speak with a natural ${accent} accent.`, style && `Delivery: ${style}.`].filter(Boolean).join(" ");
-      const body = {contents: [{role: "user", parts: [{text: script}]}],
-        generationConfig: {responseModalities: ["AUDIO"], speechConfig: {voiceConfig: {prebuiltVoiceConfig: {voiceName: $("voice").value}}}}};
-      let data;
-      try {
-        ({data} = await gemini(models("ttsModels"), guide ? {...body, systemInstruction: {parts: [{text: guide + " Read the user's text exactly as written and say nothing else."}]}} : body, 180000));
-      } catch (e) {
-        if (e instanceof Fatal || !guide) throw e;
-        ({data} = await gemini(models("ttsModels"), body, 180000));   // model rejected style guidance: plain script only
-        alert("This voice model ignored the accent/delivery setting, so the default voice style was used.");
+      const styleText = [accent && `${accent} accent`, style].filter(Boolean).join(". ");
+      let audioB64 = "", mime = "";
+      const errors = [];
+      for (const model of models("ttsModels")) {
+        try {
+          const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+            method: "POST", signal: AbortSignal.timeout(180000),
+            headers: {"content-type": "application/json", "x-goog-api-key": apiKey},
+            body: JSON.stringify({model, response_format: {type: "audio"},
+              generation_config: {speech_config: [{voice: $("voice").value}]},
+              input: [{type: "user_input", content: [{type: "text", text: script,
+                annotations: styleText ? [{type: "speech_metadata", style: styleText}] : []}]}]})});
+          const j = await res.json().catch(() => ({}));
+          if (res.status === 401 || res.status === 403 || (res.status === 400 && /api key/i.test(j.error?.message || "")))
+            throw new Fatal("Google rejected this API key. Check that you copied the whole key from Google AI Studio.");
+          if (!res.ok) { errors.push(`${model}: ${res.status === 429 ? "limit reached" : res.status === 503 ? "busy" : (j.error?.message || res.status).toString().slice(0, 80)}`); continue; }
+          const a = (j.steps || []).flatMap((st) => st.content || []).find((c) => c.type === "audio" && c.data);
+          if (a) { audioB64 = a.data; mime = a.mime_type || "audio/wav"; break; }
+          errors.push(`${model}: no audio returned`);
+        } catch (e) {
+          if (e instanceof Fatal) throw e;
+          errors.push(`${model}: ${e.name === "TimeoutError" ? "took too long" : "network error"}`);
+        }
       }
-      const part = ((data.candidates || [])[0]?.content?.parts || []).find((p) => p.inlineData);
-      if (!part) throw new Error("The voice model returned no audio. Try again or pick another voice.");
-      const bytes = b64bytes(part.inlineData.data), mime = part.inlineData.mimeType || "";
+      if (!audioB64) {
+        // Backup route (older API): plain script only, so nothing but the script can ever be spoken.
+        const {data} = await gemini(models("ttsModels"), {contents: [{role: "user", parts: [{text: script}]}],
+          generationConfig: {responseModalities: ["AUDIO"], speechConfig: {voiceConfig: {prebuiltVoiceConfig: {voiceName: $("voice").value}}}}}, 180000)
+          .catch((e) => { throw new Error(e.message + (errors.length ? " (" + errors.join(" · ") + ")" : "")); });
+        const part = ((data.candidates || [])[0]?.content?.parts || []).find((x) => x.inlineData);
+        if (!part) throw new Error("The voice model returned no audio. Try again or pick another voice.");
+        audioB64 = part.inlineData.data; mime = part.inlineData.mimeType || "";
+        alert("Accent/style could not be applied right now, so the voice's default style was used.");
+      }
+      const bytes = b64bytes(audioB64);
       const rate = +(mime.match(/rate=(\d+)/) || [0, 24000])[1];
       const blob = /wav/i.test(mime) ? new Blob([bytes], {type: "audio/wav"}) : pcmToWav(bytes, rate);
       const buffer = await ctx().decodeAudioData(await blob.arrayBuffer());
