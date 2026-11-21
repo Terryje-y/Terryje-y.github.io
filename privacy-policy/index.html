@@ -76,6 +76,33 @@
 <li><strong>Your photos and video clips</strong> never leave your device. The video is assembled in your browser.</li>
 <li>Use of the Gemini API with your key is subject to Google&rsquo;s terms, and any usage limits or charges on your Google account are between you and Google.</li>
 </ul>
+<h2 id="tiktok-integration-news-ai-engine">TikTok integration (News AI Engine)</h2>
+<p>The News AI Engine can connect to TikTok accounts through TikTok&rsquo;s official Login Kit and Content Posting API,
+only when the account owner connects it and approves the requested permissions.</p>
+<p><strong>Permissions requested</strong></p>
+<ul>
+<li><code>user.info.basic</code> - to show which account is connected (open ID, display name and profile picture).</li>
+<li><code>video.upload</code> - to send a finished video to the account&rsquo;s TikTok inbox as a draft, which the owner then reviews and posts in the TikTok app.</li>
+<li><code>video.publish</code> - to post a finished video directly, only when the owner has chosen Direct Post before starting, with the privacy setting the owner selects.</li>
+</ul>
+<p><strong>What we store and how</strong></p>
+<ul>
+<li>The access and refresh tokens TikTok issues are stored <strong>encrypted</strong> on the device that runs the engine. They are never shown in the dashboard, written to logs or shared with anyone.</li>
+<li>The account&rsquo;s open ID, display name and profile picture link, and the status of each upload (for example &ldquo;sent to inbox&rdquo; or &ldquo;published&rdquo;).</li>
+<li>We do not collect TikTok passwords, followers, messages, comments, viewing history or any data about other TikTok users.</li>
+</ul>
+<p><strong>How it is used</strong></p>
+<ul>
+<li>Only to show the connected account and to upload or publish the videos the account owner creates and chooses to send.</li>
+<li>Nothing is uploaded automatically unless the owner selects that mode before starting a batch; the default is render only.</li>
+<li>TikTok data is never sold, shared with advertisers, or used for advertising or profiling.</li>
+</ul>
+<p><strong>Disconnecting and deletion</strong></p>
+<ul>
+<li>Disconnecting an account in the engine revokes the app&rsquo;s access at TikTok and deletes the stored tokens.</li>
+<li>You can also remove the app at any time in TikTok: Settings and privacy → Security → Manage app permissions.</li>
+<li>To ask for deletion of any remaining account information, contact us using the details on our Contact page.</li>
+</ul>
 <h2 id="advertising-and-google-adsense">Advertising and Google AdSense</h2>
 <p>We may display advertisements served by Google AdSense. In connection with this:</p>
 <ul>
