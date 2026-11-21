@@ -7,7 +7,7 @@
 <meta name="description" content="Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.">
 <link rel="canonical" href="https://terryje-y.github.io/python-video-pipeline-termux/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0b0f19">
+<meta name="theme-color" content="#7c3aed">
 <meta property="og:site_name" content="News AI Engine">
 <meta property="og:title" content="Running a Python Video Pipeline in Termux: Setup, Limits and Lessons">
 <meta property="og:description" content="Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.">
@@ -20,49 +20,59 @@
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/static/fonts/PlusJakartaSans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
-<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<link rel="stylesheet" href="/static/css/site.css?v=760fa7fa80">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Running a Python Video Pipeline in Termux: Setup, Limits and Lessons", "description": "Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.", "image": ["https://terryje-y.github.io/static/img/covers/python-video-pipeline-termux.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/python-video-pipeline-termux/", "wordCount": 654, "articleSection": "Tutorials", "keywords": "termux, android, python, ffmpeg, setup"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Tutorials", "item": "https://terryje-y.github.io/category/tutorials/"}, {"@type": "ListItem", "position": 3, "name": "Running a Python Video Pipeline in Termux: Setup, Limits and Lessons", "item": "https://terryje-y.github.io/python-video-pipeline-termux/"}]}</script>
 
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress"></div>
 <header class="top">
   <div class="wrap top-in">
-    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
-    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
-    <nav id="nav" class="nav" aria-label="Topics">
-      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
-      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav id="nav" class="nav" aria-label="Main">
+      <a href="/start-here/" >Start here</a>
+      <div class="dd">
+        <button type="button" aria-haspopup="true">Guides <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
+          <a href="/category/creator-guides/"><b>Creator Guides</b><span>Beginner-friendly. No coding needed.</span></a><a href="/category/ai-news-automation/"><b>AI News Automation</b><span>How AI researches, writes and voices news videos.</span></a><a href="/category/video-editing/"><b>Video Editing</b><span>Montages, captions, pacing and visual storytelling.</span></a><a href="/category/ai-tools/"><b>AI Tools</b><span>Honest reviews of AI models and creator tools.</span></a><a href="/category/tutorials/"><b>Tutorials</b><span>Step-by-step builds for technical readers.</span></a><a href="/category/python-ffmpeg/"><b>Python &amp; FFmpeg</b><span>Developer guides to video processing.</span></a><a href="/category/remotion-motion-graphics/"><b>Remotion &amp; Motion Graphics</b><span>Animated text, titles and motion design.</span></a><a href="/category/case-studies/"><b>Case Studies</b><span>Real results, failures and fixes.</span></a>
+          <a href="/articles/"><b>All articles</b><span>Everything we have published, newest first.</span></a>
+        </div>
+      </div>
+      <a href="/engine/" >The Engine</a>
+      <a href="/about/" >About</a>
+      <a href="/search/" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="sr-label">Search</span></a>
+      <a class="btn sm cta" href="/engine/">Explore the Engine</a>
     </nav>
   </div>
 </header>
 <main id="main">
 
-<article class="post">
-  <div class="wrap narrow">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/tutorials/">Tutorials</a></nav>
-    <a class="chip" href="/category/tutorials/">Tutorials</a>
-    <h1>Running a Python Video Pipeline in Termux: Setup, Limits and Lessons</h1>
-    <p class="lead">Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.</p>
-    <div class="byline">
-      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
-      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
-      
-      <span>3 min read</span>
+<article>
+  <header class="post-hero">
+    <div class="narrow">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/category/tutorials/">Tutorials</a></nav>
+      <a class="chip" href="/category/tutorials/">Tutorials</a>
+      <h1>Running a Python Video Pipeline in Termux: Setup, Limits and Lessons</h1>
+      <p class="lead">Run Python, FFmpeg and whisper.cpp on an Android phone with Termux: setup, real limits, and habits that keep a phone-based pipeline stable.</p>
+      <div class="byline">
+        <img src="/static/img/logo.svg" alt="" width="44" height="44">
+        <div><b><a href="/about/" style="color:inherit">News AI Engine Editorial Team</a></b>
+          <span><time datetime="2026-11-21">November 21, 2026</time> · 3 min read</span></div>
+      </div>
     </div>
-  </div>
-  <div class="wrap mid"><img class="cover" src="/static/img/covers/python-video-pipeline-termux.jpg" alt="Running a Python Video Pipeline in Termux: Setup, Limits and Lessons" width="1200" height="630" fetchpriority="high"></div>
-  <div class="wrap narrow">
-    
-    <details class="toc" open><summary>In this article</summary><ol>
-      <li><a href="#what-termux-gives-you">What Termux gives you</a></li><li><a href="#checking-your-ffmpeg-build">Checking your FFmpeg build</a></li><li><a href="#speech-recognition-with-whispercpp-in-proot">Speech recognition with whisper.cpp in proot</a></li><li><a href="#know-your-limits">Know your limits</a></li><li><a href="#habits-that-keep-it-stable">Habits that keep it stable</a></li><li><a href="#is-a-phone-a-good-production-machine">Is a phone a good production machine?</a></li>
-    </ol></details>
-    
-    <div class="prose"><p>Our News AI Engine has done much of its work on an Android phone. That was partly necessity and partly an experiment: how far can a creator get with hardware they already own? Further than we expected - with some firm limits. This guide covers the setup and the lessons.</p>
+  </header>
+  <div class="wrap" style="max-width:1100px"><img class="cover" src="/static/img/covers/python-video-pipeline-termux.jpg" alt="Running a Python Video Pipeline in Termux: Setup, Limits and Lessons" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap post-layout">
+    <div>
+      
+      <div class="prose"><p>Our News AI Engine has done much of its work on an Android phone. That was partly necessity and partly an experiment: how far can a creator get with hardware they already own? Further than we expected - with some firm limits. This guide covers the setup and the lessons.</p>
 <h2 id="what-termux-gives-you">What Termux gives you</h2>
 <p>Termux is a terminal app for Android with its own package manager. It provides real builds of Python, FFmpeg (with libass, libx264 and many filters), Git, Node.js and SQLite. For anything that needs a standard Linux userland, <code>proot-distro</code> can run a full Ubuntu environment inside Termux without root.</p>
 <pre><code class="language-bash">pkg update
@@ -101,19 +111,33 @@ termux-setup-storage        # grants access to shared storage (~/storage/shared)
 </ol>
 <h2 id="is-a-phone-a-good-production-machine">Is a phone a good production machine?</h2>
 <p>For learning, prototyping and modest daily output: yes, surprisingly. A phone can write scripts through APIs, record narration, align captions, edit shorts in a few minutes and render long videos slowly. For high volume or 1080p long-form at scale, a small Linux server or desktop will be several times faster - and the same Python code will run there unchanged, which is the best argument for building this way.</p></div>
-    <p class="tags"><span>#termux</span><span>#android</span><span>#python</span><span>#ffmpeg</span><span>#setup</span></p>
-    <aside class="author">
-      <img src="/static/img/logo.svg" alt="" width="56" height="56">
-      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
-        <a href="/editorial-policy/">How we write and test our articles</a></div>
+      <div class="tags"><span>#termux</span><span>#android</span><span>#python</span><span>#ffmpeg</span><span>#setup</span></div>
+      <aside class="author">
+        <img src="/static/img/logo.svg" alt="" width="60" height="60">
+        <div><b>News AI Engine Editorial Team</b><span class="role">The team behind the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+          <a href="/editorial-policy/">How we write and check our articles →</a></div>
+      </aside>
+      <div class="share"><button type="button" data-copy="https://terryje-y.github.io/python-video-pipeline-termux/">Copy link</button>
+        <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/python-video-pipeline-termux/&amp;text=Running%20a%20Python%20Video%20Pipeline%20in%20Termux%3A%20Setup%2C%20Limits%20and%20Lessons" rel="noopener" target="_blank">Share on X</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/python-video-pipeline-termux/" rel="noopener" target="_blank">LinkedIn</a>
+        <a href="https://wa.me/?text=Running%20a%20Python%20Video%20Pipeline%20in%20Termux%3A%20Setup%2C%20Limits%20and%20Lessons%20https%3A//terryje-y.github.io/python-video-pipeline-termux/" rel="noopener" target="_blank">WhatsApp</a></div>
+    </div>
+    <aside>
+      
+      <details class="toc" open><summary>On this page</summary><ol>
+        <li><a href="#what-termux-gives-you">What Termux gives you</a></li><li><a href="#checking-your-ffmpeg-build">Checking your FFmpeg build</a></li><li><a href="#speech-recognition-with-whispercpp-in-proot">Speech recognition with whisper.cpp in proot</a></li><li><a href="#know-your-limits">Know your limits</a></li><li><a href="#habits-that-keep-it-stable">Habits that keep it stable</a></li><li><a href="#is-a-phone-a-good-production-machine">Is a phone a good production machine?</a></li>
+      </ol></details>
+      
+      <div class="side-cta"><b>Meet the News AI Engine</b>Script, voiceover, editing and captions in one workflow.<br><a href="/engine/">Explore the Engine</a></div>
     </aside>
-    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/python-video-pipeline-termux/">Copy link</button>
-      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/python-video-pipeline-termux/&text=Running%20a%20Python%20Video%20Pipeline%20in%20Termux%3A%20Setup%2C%20Limits%20and%20Lessons" rel="noopener" target="_blank">Share on X</a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/python-video-pipeline-termux/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
   </div>
-  
-  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
-  <a href="/tiktok-content-posting-api-guide/" class="card-img"><img src="/static/img/covers/tiktok-content-posting-api-guide.jpg" alt="TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit" width="1200" height="630" loading="lazy" decoding="async"></a>
+</article>
+
+<section class="section soft" style="margin-top:56px">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">Keep reading</span><h2>Related guides</h2></div><a class="link-more" href="/articles/">All articles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="grid"><article class="card">
+  <a href="/tiktok-content-posting-api-guide/" class="card-img" tabindex="-1" aria-hidden="true"><img src="/static/img/covers/tiktok-content-posting-api-guide.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async"></a>
   <div class="card-body">
     <a class="chip" href="/category/tutorials/">Tutorials</a>
     <h3><a href="/tiktok-content-posting-api-guide/">TikTok Content Posting API Explained: Direct Post, Inbox Uploads and the Audit</a></h3>
@@ -121,7 +145,7 @@ termux-setup-storage        # grants access to shared storage (~/storage/shared)
     <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
   </div>
 </article><article class="card">
-  <a href="/scheduling-social-video-uploads-safely/" class="card-img"><img src="/static/img/covers/scheduling-social-video-uploads-safely.jpg" alt="Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <a href="/scheduling-social-video-uploads-safely/" class="card-img" tabindex="-1" aria-hidden="true"><img src="/static/img/covers/scheduling-social-video-uploads-safely.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async"></a>
   <div class="card-body">
     <a class="chip" href="/category/tutorials/">Tutorials</a>
     <h3><a href="/scheduling-social-video-uploads-safely/">Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts</a></h3>
@@ -129,40 +153,47 @@ termux-setup-storage        # grants access to shared storage (~/storage/shared)
     <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
   </div>
 </article><article class="card">
-  <a href="/forced-alignment-whisper-cpp-captions/" class="card-img"><img src="/static/img/covers/forced-alignment-whisper-cpp-captions.jpg" alt="Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <a href="/forced-alignment-whisper-cpp-captions/" class="card-img" tabindex="-1" aria-hidden="true"><img src="/static/img/covers/forced-alignment-whisper-cpp-captions.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async"></a>
   <div class="card-body">
     <a class="chip" href="/category/video-editing/">Video Editing</a>
     <h3><a href="/forced-alignment-whisper-cpp-captions/">Forced Alignment With whisper.cpp: Word-Accurate Captions on a Phone</a></h3>
     <p>Time every spoken word for captions and graphics by aligning whisper.cpp word timestamps to your known script - running on a phone.</p>
     <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
   </div>
-</article></div></section>
-  
-</article>
+</article></div>
+  </div>
+</section>
+
 
 </main>
 <footer class="foot">
   <div class="wrap foot-grid">
     <div>
-      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
-      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
-      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+      <p>Make news videos with AI, the smart way. Clear, honest guides for creators who want to make news and explainer videos with AI, from the team that builds the News AI Engine.</p>
+      <a class="btn sm" href="/engine/">Explore the Engine</a>
     </div>
     <div>
-      <h2>Topics</h2>
-      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+      <h2>Guides</h2>
+      <ul><li><a href="/category/creator-guides/">Creator Guides</a></li><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
     </div>
     <div>
-      <h2>About</h2>
-      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+      <h2>Company</h2>
+      <ul><li><a href="/engine/">The Engine</a></li><li><a href="/start-here/">Start here</a></li>
+      <li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li>
+      <li><a href="/feed.xml">RSS feed</a></li></ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
     </div>
   </div>
-  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+  <div class="wrap legal"><span>© 2026 News AI Engine. All rights reserved.</span><span>Educational content. Not affiliated with Google, TikTok or YouTube.</span></div>
 </footer>
 <div class="cookie" id="cookie" hidden>
-  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
-  <button type="button" id="cookie-ok">OK</button>
+  <p>We use cookies for basic site features and, where enabled, advertising by Google. Read our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">Got it</button>
 </div>
-<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+<script src="/static/js/site.js?v=760fa7fa80" defer></script>
 </body>
 </html>

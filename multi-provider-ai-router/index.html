@@ -7,7 +7,7 @@
 <meta name="description" content="A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.">
 <link rel="canonical" href="https://terryje-y.github.io/multi-provider-ai-router/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0b0f19">
+<meta name="theme-color" content="#7c3aed">
 <meta property="og:site_name" content="News AI Engine">
 <meta property="og:title" content="Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation">
 <meta property="og:description" content="A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.">
@@ -20,49 +20,59 @@
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/static/img/logo-192.png">
+<link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/static/fonts/PlusJakartaSans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
-<link rel="stylesheet" href="/static/css/site.css?v=21e3f7eaed">
+<link rel="stylesheet" href="/static/css/site.css?v=760fa7fa80">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation", "description": "A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.", "image": ["https://terryje-y.github.io/static/img/covers/multi-provider-ai-router.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/multi-provider-ai-router/", "wordCount": 884, "articleSection": "AI Tools", "keywords": "llm, python, reliability, fallback, gemini, openrouter"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "AI Tools", "item": "https://terryje-y.github.io/category/ai-tools/"}, {"@type": "ListItem", "position": 3, "name": "Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation", "item": "https://terryje-y.github.io/multi-provider-ai-router/"}]}</script>
 
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress"></div>
 <header class="top">
   <div class="wrap top-in">
-    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="32" height="32"><span>News AI Engine</span></a>
-    <button class="menu-btn" aria-expanded="false" aria-controls="nav" type="button">Menu</button>
-    <nav id="nav" class="nav" aria-label="Topics">
-      <a href="/category/ai-news-automation/" >AI News Automation</a><a href="/category/video-editing/" >Video Editing</a><a href="/category/ai-tools/" >AI Tools</a><a href="/category/tutorials/" >Tutorials</a><a href="/category/python-ffmpeg/" >Python &amp; FFmpeg</a><a href="/category/remotion-motion-graphics/" >Remotion &amp; Motion Graphics</a><a href="/category/case-studies/" >Case Studies</a>
-      <a href="/search/" class="nav-search" aria-label="Search">Search</a>
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav id="nav" class="nav" aria-label="Main">
+      <a href="/start-here/" >Start here</a>
+      <div class="dd">
+        <button type="button" aria-haspopup="true">Guides <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
+          <a href="/category/creator-guides/"><b>Creator Guides</b><span>Beginner-friendly. No coding needed.</span></a><a href="/category/ai-news-automation/"><b>AI News Automation</b><span>How AI researches, writes and voices news videos.</span></a><a href="/category/video-editing/"><b>Video Editing</b><span>Montages, captions, pacing and visual storytelling.</span></a><a href="/category/ai-tools/"><b>AI Tools</b><span>Honest reviews of AI models and creator tools.</span></a><a href="/category/tutorials/"><b>Tutorials</b><span>Step-by-step builds for technical readers.</span></a><a href="/category/python-ffmpeg/"><b>Python &amp; FFmpeg</b><span>Developer guides to video processing.</span></a><a href="/category/remotion-motion-graphics/"><b>Remotion &amp; Motion Graphics</b><span>Animated text, titles and motion design.</span></a><a href="/category/case-studies/"><b>Case Studies</b><span>Real results, failures and fixes.</span></a>
+          <a href="/articles/"><b>All articles</b><span>Everything we have published, newest first.</span></a>
+        </div>
+      </div>
+      <a href="/engine/" >The Engine</a>
+      <a href="/about/" >About</a>
+      <a href="/search/" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="sr-label">Search</span></a>
+      <a class="btn sm cta" href="/engine/">Explore the Engine</a>
     </nav>
   </div>
 </header>
 <main id="main">
 
-<article class="post">
-  <div class="wrap narrow">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/category/ai-tools/">AI Tools</a></nav>
-    <a class="chip" href="/category/ai-tools/">AI Tools</a>
-    <h1>Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation</h1>
-    <p class="lead">A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.</p>
-    <div class="byline">
-      <span>By <a href="/about/">News AI Engine Editorial Team</a></span>
-      <span>Published <time datetime="2026-11-21">November 21, 2026</time></span>
-      
-      <span>4 min read</span>
+<article>
+  <header class="post-hero">
+    <div class="narrow">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/category/ai-tools/">AI Tools</a></nav>
+      <a class="chip" href="/category/ai-tools/">AI Tools</a>
+      <h1>Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation</h1>
+      <p class="lead">A practical Python design for calling several AI providers reliably: model chains, error classes, repair retries, health and cost logs.</p>
+      <div class="byline">
+        <img src="/static/img/logo.svg" alt="" width="44" height="44">
+        <div><b><a href="/about/" style="color:inherit">News AI Engine Editorial Team</a></b>
+          <span><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span></div>
+      </div>
     </div>
-  </div>
-  <div class="wrap mid"><img class="cover" src="/static/img/covers/multi-provider-ai-router.jpg" alt="Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation" width="1200" height="630" fetchpriority="high"></div>
-  <div class="wrap narrow">
-    
-    <details class="toc" open><summary>In this article</summary><ol>
-      <li><a href="#requirements">Requirements</a></li><li><a href="#task-routes-and-model-chains">Task routes and model chains</a></li><li><a href="#error-classification">Error classification</a></li><li><a href="#the-core-loop">The core loop</a></li><li><a href="#validators-the-routers-quality-gate">Validators: the router&amp;rsquo;s quality gate</a></li><li><a href="#health-and-circuit-breaking">Health and circuit breaking</a></li><li><a href="#usage-and-cost-tracking">Usage and cost tracking</a></li><li><a href="#vision-requests-through-the-same-router">Vision requests through the same router</a></li><li><a href="#things-that-bit-us">Things that bit us</a></li><li><a href="#summary">Summary</a></li>
-    </ol></details>
-    
-    <div class="prose"><p>If your content pipeline depends on one AI model, your pipeline is exactly as reliable as that model on its worst day. Ours depends on language models for scripts, vision models for footage analysis, and both for planning graphics. This guide describes the router we built so that a slow or failing provider becomes a short delay instead of a failed video.</p>
+  </header>
+  <div class="wrap" style="max-width:1100px"><img class="cover" src="/static/img/covers/multi-provider-ai-router.jpg" alt="Building a Multi-Provider AI Router With Fallbacks, Circuit Breakers and Validation" width="1200" height="630" fetchpriority="high"></div>
+  <div class="wrap post-layout">
+    <div>
+      
+      <div class="prose"><p>If your content pipeline depends on one AI model, your pipeline is exactly as reliable as that model on its worst day. Ours depends on language models for scripts, vision models for footage analysis, and both for planning graphics. This guide describes the router we built so that a slow or failing provider becomes a short delay instead of a failed video.</p>
 <p>It is written in plain Python with <code>requests</code> and the official SDKs. No framework is required.</p>
 <h2 id="requirements">Requirements</h2>
 <p>Before writing code we listed what the router must do:</p>
@@ -209,19 +219,33 @@
 <h2 id="summary">Summary</h2>
 <p>A good router is mostly bookkeeping: explicit routes, honest error categories, a repair step, health memory and a usage log. None of it is glamorous. All of it is the difference between &ldquo;the AI failed&rdquo; and a finished video.</p>
 <p>For the debugging story that led to this design, read <a href="/gemini-504-deadline-exceeded-case-study/">our 504 DEADLINE_EXCEEDED case study</a>.</p></div>
-    <p class="tags"><span>#llm</span><span>#python</span><span>#reliability</span><span>#fallback</span><span>#gemini</span><span>#openrouter</span></p>
-    <aside class="author">
-      <img src="/static/img/logo.svg" alt="" width="56" height="56">
-      <div><b>News AI Engine Editorial Team</b><span>Builders of the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
-        <a href="/editorial-policy/">How we write and test our articles</a></div>
+      <div class="tags"><span>#llm</span><span>#python</span><span>#reliability</span><span>#fallback</span><span>#gemini</span><span>#openrouter</span></div>
+      <aside class="author">
+        <img src="/static/img/logo.svg" alt="" width="60" height="60">
+        <div><b>News AI Engine Editorial Team</b><span class="role">The team behind the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
+          <a href="/editorial-policy/">How we write and check our articles →</a></div>
+      </aside>
+      <div class="share"><button type="button" data-copy="https://terryje-y.github.io/multi-provider-ai-router/">Copy link</button>
+        <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/multi-provider-ai-router/&amp;text=Building%20a%20Multi-Provider%20AI%20Router%20With%20Fallbacks%2C%20Circuit%20Breakers%20and%20Validation" rel="noopener" target="_blank">Share on X</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/multi-provider-ai-router/" rel="noopener" target="_blank">LinkedIn</a>
+        <a href="https://wa.me/?text=Building%20a%20Multi-Provider%20AI%20Router%20With%20Fallbacks%2C%20Circuit%20Breakers%20and%20Validation%20https%3A//terryje-y.github.io/multi-provider-ai-router/" rel="noopener" target="_blank">WhatsApp</a></div>
+    </div>
+    <aside>
+      
+      <details class="toc" open><summary>On this page</summary><ol>
+        <li><a href="#requirements">Requirements</a></li><li><a href="#task-routes-and-model-chains">Task routes and model chains</a></li><li><a href="#error-classification">Error classification</a></li><li><a href="#the-core-loop">The core loop</a></li><li><a href="#validators-the-routers-quality-gate">Validators: the router&amp;rsquo;s quality gate</a></li><li><a href="#health-and-circuit-breaking">Health and circuit breaking</a></li><li><a href="#usage-and-cost-tracking">Usage and cost tracking</a></li><li><a href="#vision-requests-through-the-same-router">Vision requests through the same router</a></li><li><a href="#things-that-bit-us">Things that bit us</a></li><li><a href="#summary">Summary</a></li>
+      </ol></details>
+      
+      <div class="side-cta"><b>Meet the News AI Engine</b>Script, voiceover, editing and captions in one workflow.<br><a href="/engine/">Explore the Engine</a></div>
     </aside>
-    <div class="share"><button type="button" data-copy="https://terryje-y.github.io/multi-provider-ai-router/">Copy link</button>
-      <a href="https://twitter.com/intent/tweet?url=https%3A//terryje-y.github.io/multi-provider-ai-router/&text=Building%20a%20Multi-Provider%20AI%20Router%20With%20Fallbacks%2C%20Circuit%20Breakers%20and%20Validation" rel="noopener" target="_blank">Share on X</a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//terryje-y.github.io/multi-provider-ai-router/" rel="noopener" target="_blank">Share on LinkedIn</a></div>
   </div>
-  
-  <section class="wrap related"><h2 class="section-title">Keep reading</h2><div class="grid"><article class="card">
-  <a href="/ai-visual-scanning-footage-library/" class="card-img"><img src="/static/img/covers/ai-visual-scanning-footage-library.jpg" alt="AI Visual Scanning of a Footage Library With Vision Models" width="1200" height="630" loading="lazy" decoding="async"></a>
+</article>
+
+<section class="section soft" style="margin-top:56px">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">Keep reading</span><h2>Related guides</h2></div><a class="link-more" href="/articles/">All articles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="grid"><article class="card">
+  <a href="/ai-visual-scanning-footage-library/" class="card-img" tabindex="-1" aria-hidden="true"><img src="/static/img/covers/ai-visual-scanning-footage-library.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async"></a>
   <div class="card-body">
     <a class="chip" href="/category/ai-tools/">AI Tools</a>
     <h3><a href="/ai-visual-scanning-footage-library/">AI Visual Scanning of a Footage Library With Vision Models</a></h3>
@@ -229,7 +253,7 @@
     <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
   </div>
 </article><article class="card">
-  <a href="/gemini-504-deadline-exceeded-case-study/" class="card-img"><img src="/static/img/covers/gemini-504-deadline-exceeded-case-study.jpg" alt="Why Our AI Scripts Kept Failing: A 504 DEADLINE_EXCEEDED Case Study" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <a href="/gemini-504-deadline-exceeded-case-study/" class="card-img" tabindex="-1" aria-hidden="true"><img src="/static/img/covers/gemini-504-deadline-exceeded-case-study.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async"></a>
   <div class="card-body">
     <a class="chip" href="/category/case-studies/">Case Studies</a>
     <h3><a href="/gemini-504-deadline-exceeded-case-study/">Why Our AI Scripts Kept Failing: A 504 DEADLINE_EXCEEDED Case Study</a></h3>
@@ -237,40 +261,47 @@
     <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
   </div>
 </article><article class="card">
-  <a href="/ai-script-generation-news-guardrails/" class="card-img"><img src="/static/img/covers/ai-script-generation-news-guardrails.jpg" alt="AI Script Generation for News Videos: Structure, Length and Factual Guard-rails" width="1200" height="630" loading="lazy" decoding="async"></a>
+  <a href="/ai-script-generation-news-guardrails/" class="card-img" tabindex="-1" aria-hidden="true"><img src="/static/img/covers/ai-script-generation-news-guardrails.jpg" alt="" width="1200" height="630" loading="lazy" decoding="async"></a>
   <div class="card-body">
     <a class="chip" href="/category/ai-news-automation/">AI News Automation</a>
     <h3><a href="/ai-script-generation-news-guardrails/">AI Script Generation for News Videos: Structure, Length and Factual Guard-rails</a></h3>
     <p>How we prompt and validate AI models to write gripping 60-second news scripts that stay factual: structured output, timed length and claim checks.</p>
     <span class="meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
   </div>
-</article></div></section>
-  
-</article>
+</article></div>
+  </div>
+</section>
+
 
 </main>
 <footer class="foot">
   <div class="wrap foot-grid">
     <div>
-      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="28" height="28"><span>News AI Engine</span></a>
-      <p>AI video automation, explained by the people who build it. Independent, hands-on guides from the team that builds and runs the News AI Engine.</p>
-      <p class="small"><a href="/feed.xml">RSS feed</a> · <a href="/articles/">All articles</a></p>
+      <a class="logo" href="/"><img src="/static/img/logo.svg" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+      <p>Make news videos with AI, the smart way. Clear, honest guides for creators who want to make news and explainer videos with AI, from the team that builds the News AI Engine.</p>
+      <a class="btn sm" href="/engine/">Explore the Engine</a>
     </div>
     <div>
-      <h2>Topics</h2>
-      <ul><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
+      <h2>Guides</h2>
+      <ul><li><a href="/category/creator-guides/">Creator Guides</a></li><li><a href="/category/ai-news-automation/">AI News Automation</a></li><li><a href="/category/video-editing/">Video Editing</a></li><li><a href="/category/ai-tools/">AI Tools</a></li><li><a href="/category/tutorials/">Tutorials</a></li><li><a href="/category/python-ffmpeg/">Python &amp; FFmpeg</a></li><li><a href="/category/remotion-motion-graphics/">Remotion &amp; Motion Graphics</a></li><li><a href="/category/case-studies/">Case Studies</a></li></ul>
     </div>
     <div>
-      <h2>About</h2>
-      <ul><li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
+      <h2>Company</h2>
+      <ul><li><a href="/engine/">The Engine</a></li><li><a href="/start-here/">Start here</a></li>
+      <li><a href="/about/">About Us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/editorial-policy/">Editorial Policy</a></li>
+      <li><a href="/feed.xml">RSS feed</a></li></ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul><li><a href="/cookie-policy/">Cookie Policy</a></li><li><a href="/disclaimer/">Disclaimer</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms-and-conditions/">Terms and Conditions</a></li></ul>
     </div>
   </div>
-  <div class="wrap legal">© 2026 News AI Engine. Educational content; not affiliated with Google, TikTok, YouTube or the projects we write about.</div>
+  <div class="wrap legal"><span>© 2026 News AI Engine. All rights reserved.</span><span>Educational content. Not affiliated with Google, TikTok or YouTube.</span></div>
 </footer>
 <div class="cookie" id="cookie" hidden>
-  <p>We use cookies for basic site functions and, where enabled, advertising by Google. See our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
-  <button type="button" id="cookie-ok">OK</button>
+  <p>We use cookies for basic site features and, where enabled, advertising by Google. Read our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
+  <button type="button" id="cookie-ok">Got it</button>
 </div>
-<script src="/static/js/site.js?v=21e3f7eaed" defer></script>
+<script src="/static/js/site.js?v=760fa7fa80" defer></script>
 </body>
 </html>

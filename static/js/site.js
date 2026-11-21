@@ -1,7 +1,16 @@
 // Tiny, dependency-free site script: menu, cookie notice, copy link, search.
 (() => {
   const btn = document.querySelector(".menu-btn"), nav = document.getElementById("nav");
-  if (btn && nav) btn.addEventListener("click", () => { const o = nav.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });
+  if (btn && nav) {
+    btn.addEventListener("click", () => { const o = nav.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });
+    nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { nav.classList.remove("open"); btn.setAttribute("aria-expanded", false); }));
+  }
+
+  const bar = document.getElementById("progress");
+  if (bar) {
+    const upd = () => { const h = document.documentElement; const max = h.scrollHeight - h.clientHeight; bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%"; };
+    addEventListener("scroll", upd, {passive: true}); upd();
+  }
 
   const cookie = document.getElementById("cookie");
   let seen = false;
