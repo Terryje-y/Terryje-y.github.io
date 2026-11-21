@@ -13,6 +13,7 @@
   };
   let apiKey = store.get("nae_key") || "";
   let audio = null;            // {blob, buffer, url}
+  let lastVideoUrl = "";
   let pack = null;             // AI output
   const media = [];            // {kind, el}
 
@@ -186,15 +187,46 @@ Return JSON with keys:
   });
 
   // ---------- 3. video ----------
-  $("media").addEventListener("change", (ev) => {
-    for (const f of ev.target.files) {
-      const url = URL.createObjectURL(f);
-      const el = f.type.startsWith("video") ? Object.assign(document.createElement("video"), {src: url, muted: true, loop: true, playsInline: true, preload: "auto"})
-        : Object.assign(new Image(), {src: url});
-      media.push({kind: f.type.startsWith("video") ? "video" : "image", el});
-      const t = el.cloneNode(); if (t.tagName === "VIDEO") t.muted = true; $("thumbs").appendChild(t);
+  // Memory-safe media: ONE element per clip (metadata only), photos pre-scaled to the canvas size,
+  // thumbnails are tiny images (no second video decoder per clip). Only 1-2 clips ever play at once.
+  const MAX_MEDIA = 20;
+  function thumb(src) { const im = new Image(); im.src = src; im.alt = ""; $("thumbs").appendChild(im); }
+  async function addImage(f) {
+    const url = URL.createObjectURL(f);
+    try {
+      const im = new Image(); im.src = url; await im.decode();
+      const sc = Math.min(1, 1920 / Math.max(im.naturalWidth, im.naturalHeight));
+      const bmp = await createImageBitmap(im, {resizeWidth: Math.max(1, Math.round(im.naturalWidth * sc)),
+        resizeHeight: Math.max(1, Math.round(im.naturalHeight * sc)), resizeQuality: "high"});
+      const tc = document.createElement("canvas"); tc.width = 64; tc.height = 100;
+      const r = Math.max(64 / bmp.width, 100 / bmp.height);
+      tc.getContext("2d").drawImage(bmp, (64 - bmp.width * r) / 2, (100 - bmp.height * r) / 2, bmp.width * r, bmp.height * r);
+      thumb(tc.toDataURL("image/jpeg", 0.7));
+      media.push({kind: "image", bmp});
+    } finally { URL.revokeObjectURL(url); }
+  }
+  async function addVideo(f) {
+    const url = URL.createObjectURL(f);
+    const el = Object.assign(document.createElement("video"), {src: url, muted: true, loop: true, playsInline: true, preload: "metadata"});
+    await new Promise((res, rej) => { el.onloadedmetadata = res; el.onerror = () => rej(new Error(f.name + " cannot be played in this browser.")); });
+    el.currentTime = Math.min(1, (el.duration || 2) / 2);
+    await new Promise((res) => { el.onseeked = res; setTimeout(res, 3000); });
+    const tc = document.createElement("canvas"); tc.width = 64; tc.height = 100;
+    try { const r = Math.max(64 / el.videoWidth, 100 / el.videoHeight); tc.getContext("2d").drawImage(el, (64 - el.videoWidth * r) / 2, (100 - el.videoHeight * r) / 2, el.videoWidth * r, el.videoHeight * r); } catch (e) { /* no frame */ }
+    thumb(tc.toDataURL("image/jpeg", 0.7));
+    media.push({kind: "video", el, url});
+  }
+  $("media").addEventListener("change", async (ev) => {
+    const files = [...ev.target.files]; ev.target.value = "";
+    for (const f of files) {
+      if (media.length >= MAX_MEDIA) { alert(`Up to ${MAX_MEDIA} clips and photos per video.`); break; }
+      try { if (f.type.startsWith("video")) await addVideo(f); else if (f.type.startsWith("image")) await addImage(f); }
+      catch (e) { alert(e.message || `${f.name} could not be added.`); }
     }
-    ev.target.value = "";
+  });
+  $("clearMedia").addEventListener("click", () => {
+    for (const m of media.splice(0)) { if (m.kind === "video") { m.el.pause(); m.el.removeAttribute("src"); m.el.load(); URL.revokeObjectURL(m.url); } else m.bmp.close?.(); }
+    $("thumbs").innerHTML = "";
   });
 
   const norm = (s) => s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
@@ -249,7 +281,21 @@ Return JSON with keys:
     const style = $("vidStyle").value, brand = $("brand").value.trim(), duration = audio.buffer.duration + 0.4;
     const tl = timeline(script, audio.buffer.duration), groups = captionGroups(tl), points = pointTimes(tl, audio.buffer.duration);
     const seg = 3;
-    for (const m of media) if (m.kind === "video") { try { m.el.currentTime = 0; await Promise.race([m.el.play(), wait(1500)]); } catch (e) { /* autoplay */ } }
+    for (const m of media) if (m.kind === "video") m.el.pause();
+    let active = new Set();
+    function prepare(idx) {   // start a clip at a different point each time it is used; pause the rest
+      const m = media[idx % media.length];
+      if (m.kind !== "video" || active.has(idx) || [...active].some((k) => k % media.length === idx % media.length)) return;
+      const d = m.el.duration || 0;
+      try { m.el.currentTime = d > seg + 1 ? ((idx * 1.7) % (d - seg)) : 0; } catch (e) { /* not seekable yet */ }
+      m.el.play().catch(() => {});
+      active.add(idx);
+    }
+    function release(idx) {
+      active.delete(idx);
+      const m = media[idx % media.length];
+      if (m && m.kind === "video" && ![...active].some((k) => k % media.length === idx % media.length)) m.el.pause();
+    }
 
     const a = ctx(); if (a.state === "suspended") await Promise.race([a.resume(), wait(1500)]);
     const dest = a.createMediaStreamDestination(), src = a.createBufferSource();
@@ -261,7 +307,7 @@ Return JSON with keys:
     $("prog").hidden = false; $("videoOut").hidden = true;
 
     function drawMedia(m, t, alpha) {
-      const el = m.el, iw = el.videoWidth || el.naturalWidth, ih = el.videoHeight || el.naturalHeight;
+      const el = m.kind === "image" ? m.bmp : m.el, iw = m.kind === "image" ? el.width : el.videoWidth, ih = m.kind === "image" ? el.height : el.videoHeight;
       if (!iw || !ih) return;
       const z = 1.0 + 0.07 * (t % seg) / seg, sc = Math.max(W / iw, H / ih) * z;
       c.globalAlpha = alpha; c.drawImage(el, (W - iw * sc) / 2, (H - ih * sc) / 2, iw * sc, ih * sc); c.globalAlpha = 1;
@@ -272,6 +318,8 @@ Return JSON with keys:
       c.fillStyle = g; c.fillRect(0, 0, W, H);
       if (media.length) {
         const i = Math.floor(t / seg), f = (t % seg) / seg;
+        for (const k of [...active]) if (k < i) release(k);
+        prepare(i); if (f > 0.85) prepare(i + 1);
         drawMedia(media[i % media.length], t, 1);
         if (f > 0.9 && media.length > 1) drawMedia(media[(i + 1) % media.length], t, (f - 0.9) / 0.1);
       } else {
@@ -340,24 +388,40 @@ Return JSON with keys:
       c.fillStyle = "#8b5cf6"; c.fillRect(0, H - 8 * u, W * Math.min(1, t / duration), 8 * u);
     }
 
-    frame(0);
-    rec.start(500);
-    src.start(a.currentTime + 0.15); const t0 = performance.now() + 150;
-    await new Promise((resolve) => {
-      const tick = () => {
-        const t = (performance.now() - t0) / 1000;
-        frame(Math.max(0, t));
-        $("progBar").style.width = Math.min(100, (t / duration) * 100) + "%";
-        $("progText").textContent = `Recording ${Math.max(0, Math.min(duration, t)).toFixed(0)} / ${duration.toFixed(0)} s. Keep this tab open and the screen on.`;
-        if (t >= duration) return resolve();
-        requestAnimationFrame(tick);
-      };
-      tick();
-    });
-    rec.stop(); await done;
-    for (const m of media) if (m.kind === "video") m.el.pause();
+    let left = false;
+    const onHide = () => { if (document.hidden) left = true; };
+    document.addEventListener("visibilitychange", onHide);
+    try {
+      frame(0);
+      rec.start(500);
+      src.start(a.currentTime + 0.15); const t0 = performance.now() + 150;
+      await new Promise((resolve) => {
+        const tick = () => {
+          const t = (performance.now() - t0) / 1000;
+          if (left) return resolve();
+          frame(Math.max(0, t));
+          $("progBar").style.width = Math.min(100, (t / duration) * 100) + "%";
+          $("progText").textContent = `Recording ${Math.max(0, Math.min(duration, t)).toFixed(0)} / ${duration.toFixed(0)} s. Keep this tab open and the screen on.`;
+          if (t >= duration) return resolve();
+          requestAnimationFrame(tick);
+        };
+        tick();
+      });
+    } finally {
+      document.removeEventListener("visibilitychange", onHide);
+      try { if (rec.state !== "inactive") rec.stop(); } catch (e) { /* already stopped */ }
+      try { src.stop(); } catch (e) { /* not started */ }
+      src.disconnect();
+      for (const m of media) if (m.kind === "video") m.el.pause();
+      active = new Set();
+      await Promise.race([done, wait(3000)]);
+      stream.getTracks().forEach((tr) => tr.stop());
+    }
+    if (left) { $("progText").textContent = "Recording stopped because the app or tab was switched. Keep this tab open and try again."; return; }
     const type = (rec.mimeType || mime || "video/webm").split(";")[0];
     const blob = new Blob(chunks, {type}), url = URL.createObjectURL(blob);
+    if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
+    lastVideoUrl = url;
     $("outVideo").src = url; $("dlVideo").href = url; $("dlVideo").download = "ai-video." + (type.includes("mp4") ? "mp4" : "webm");
     $("videoOut").hidden = false; $("progText").textContent = `Done: ${(blob.size / 1048576).toFixed(1)} MB ${type.includes("mp4") ? "MP4" : "WebM"} video.`;
   }
