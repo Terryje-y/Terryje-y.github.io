@@ -430,11 +430,46 @@ Return JSON with keys:
       return;
     }
     const type = (rec.mimeType || mime || "video/webm").split(";")[0];
-    const blob = new Blob(chunks, {type}), url = URL.createObjectURL(blob);
+    let blob = new Blob(chunks, {type});
+    if (type.includes("mp4")) {   // write the real length into the header so galleries don't show 0:00
+      try { blob = fixMp4Duration(await blob.arrayBuffer(), duration) || blob; } catch (e) { /* keep the original file */ }
+    }
+    const url = URL.createObjectURL(blob);
     if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
     lastVideoUrl = url;
     $("outVideo").src = url; $("dlVideo").href = url; $("dlVideo").download = "ai-video." + (type.includes("mp4") ? "mp4" : "webm");
     $("videoOut").hidden = false; $("progText").textContent = `Done: ${(blob.size / 1048576).toFixed(1)} MB ${type.includes("mp4") ? "MP4" : "WebM"} video.`;
+  }
+
+  // Browsers record "fragmented" MP4 with a total duration of 0 in the header, so phone galleries show 0:00.
+  // Write the real length into mvhd / tkhd / mdhd and add an mehd box (fragment duration). Video data untouched.
+  function fixMp4Duration(buf, seconds) {
+    const src = new Uint8Array(buf), dv = new DataView(buf);
+    const box = (off) => { let size = dv.getUint32(off), hdr = 8; if (size === 1) { size = Number(dv.getBigUint64(off + 8)); hdr = 16; } else if (size === 0) size = src.length - off;
+      return {off, size, hdr, type: String.fromCharCode(src[off + 4], src[off + 5], src[off + 6], src[off + 7])}; };
+    const kids = (b) => { const out = []; let o = b.off + b.hdr; while (o + 8 <= b.off + b.size) { const k = box(o); if (k.size < 8) break; out.push(k); o += k.size; } return out; };
+    let moov = null; for (let o = 0; o + 8 <= src.length;) { const b = box(o); if (b.size < 8) break; if (b.type === "moov") { moov = b; break; } o += b.size; }
+    if (!moov || moov.hdr !== 8) return null;
+    const putDur = (b, at32, at64, value) => { if (src[b.off + 8] === 1) dv.setBigUint64(b.off + at64, BigInt(Math.round(value))); else dv.setUint32(b.off + at32, Math.min(0xffffffff, Math.round(value))); };
+    let movieScale = 1000, mvex = null, hasMehd = false;
+    for (const b of kids(moov)) {
+      if (b.type === "mvhd") { movieScale = dv.getUint32(b.off + (src[b.off + 8] === 1 ? 28 : 20)); putDur(b, 24, 32, seconds * movieScale); }
+      if (b.type === "mvex") { mvex = b; hasMehd = kids(b).some((k) => k.type === "mehd"); }
+    }
+    for (const trak of kids(moov).filter((b) => b.type === "trak")) {
+      for (const b of kids(trak)) {
+        if (b.type === "tkhd") putDur(b, 28, 36, seconds * movieScale);
+        if (b.type === "mdia") for (const m of kids(b)) if (m.type === "mdhd") {
+          const ts = dv.getUint32(m.off + (src[m.off + 8] === 1 ? 28 : 20)); putDur(m, 24, 32, seconds * ts);
+        }
+      }
+    }
+    if (!mvex || hasMehd || mvex.hdr !== 8) return new Blob([src], {type: "video/mp4"});
+    const mehd = new Uint8Array(20), md = new DataView(mehd.buffer);
+    md.setUint32(0, 20); mehd.set([109, 101, 104, 100], 4); md.setUint8(8, 1); md.setBigUint64(12, BigInt(Math.round(seconds * movieScale)));
+    dv.setUint32(moov.off, moov.size + 20); dv.setUint32(mvex.off, mvex.size + 20);
+    const at = mvex.off + 8;
+    return new Blob([src.subarray(0, at), mehd, src.subarray(at)], {type: "video/mp4"});
   }
 
   // ---------- 4. post pack ----------
