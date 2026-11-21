@@ -19,12 +19,12 @@
 
 
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/static/img/logo.svg?v=f5073add16" type="image/svg+xml">
+<link rel="icon" href="/static/img/logo.svg?v=a767fa22ed" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/static/fonts/PlusJakartaSans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="alternate" type="application/rss+xml" title="News AI Engine" href="/feed.xml">
-<link rel="stylesheet" href="/static/css/site.css?v=f5073add16">
+<link rel="stylesheet" href="/static/css/site.css?v=a767fa22ed">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts", "description": "Build a publishing scheduler that never double-posts, never dumps overdue videos at once and survives restarts - fixed slots and SQLite.", "image": ["https://terryje-y.github.io/static/img/covers/scheduling-social-video-uploads-safely.jpg"], "datePublished": "2026-11-21", "dateModified": "2026-11-21", "author": {"@type": "Organization", "name": "News AI Engine Editorial Team", "url": "https://terryje-y.github.io/about/"}, "publisher": {"@type": "Organization", "name": "News AI Engine", "url": "https://terryje-y.github.io/", "logo": {"@type": "ImageObject", "url": "https://terryje-y.github.io/static/img/logo-512.png"}}, "mainEntityOfPage": "https://terryje-y.github.io/scheduling-social-video-uploads-safely/", "wordCount": 771, "articleSection": "Tutorials", "keywords": "scheduler, python, sqlite, idempotency, automation"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://terryje-y.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Tutorials", "item": "https://terryje-y.github.io/category/tutorials/"}, {"@type": "ListItem", "position": 3, "name": "Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts", "item": "https://terryje-y.github.io/scheduling-social-video-uploads-safely/"}]}</script>
 
@@ -34,7 +34,7 @@
 <div class="progress" id="progress"></div>
 <header class="top">
   <div class="wrap top-in">
-    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg?v=f5073add16" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+    <a class="logo" href="/" aria-label="News AI Engine home"><img src="/static/img/logo.svg?v=a767fa22ed" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
     <button class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Open menu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <nav id="nav" class="nav" aria-label="Main">
       <a href="/start-here/" >Start here</a>
@@ -62,7 +62,7 @@
       <h1>Scheduling Social Video Uploads Safely: Idempotency, Missed Slots and Restarts</h1>
       <p class="lead">Build a publishing scheduler that never double-posts, never dumps overdue videos at once and survives restarts - fixed slots and SQLite.</p>
       <div class="byline">
-        <img src="/static/img/logo.svg?v=f5073add16" alt="" width="44" height="44">
+        <img src="/static/img/logo.svg?v=a767fa22ed" alt="" width="44" height="44">
         <div><b><a href="/about/" style="color:inherit">News AI Engine Editorial Team</a></b>
           <span><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span></div>
       </div>
@@ -167,7 +167,7 @@ WHERE id=? AND status='SCHEDULED' AND publish_id='';
 </ul></div>
       <div class="tags"><span>#scheduler</span><span>#python</span><span>#sqlite</span><span>#idempotency</span><span>#automation</span></div>
       <aside class="author">
-        <img src="/static/img/logo.svg?v=f5073add16" alt="" width="60" height="60">
+        <img src="/static/img/logo.svg?v=a767fa22ed" alt="" width="60" height="60">
         <div><b>News AI Engine Editorial Team</b><span class="role">The team behind the News AI Engine</span><p>We design, build and operate an AI video production engine that writes, narrates, edits and schedules news explainer videos for YouTube and TikTok. Everything we publish here comes from that hands-on work: the code we wrote, the failures we debugged and the measurements we took.</p>
           <a href="/editorial-policy/">How we write and check our articles →</a></div>
       </aside>
@@ -179,7 +179,7 @@ WHERE id=? AND status='SCHEDULED' AND publish_id='';
     <aside>
       
       <details class="toc" open><summary>On this page</summary><ol>
-        <li><a href="#fixed-slots-instead-of-free-form-times">Fixed slots instead of free-form times</a></li><li><a href="#the-tick-loop">The tick loop</a></li><li><a href="#rule-1-claim-before-you-upload">Rule 1: Claim before you upload</a></li><li><a href="#rule-2-overdue-is-not-post-now">Rule 2: Overdue is not &amp;ldquo;post now&amp;rdquo;</a></li><li><a href="#rule-3-restarts-must-never-cause-duplicates">Rule 3: Restarts must never cause duplicates</a></li><li><a href="#rule-4-published-means-confirmed">Rule 4: Published means confirmed</a></li><li><a href="#rule-5-quality-gates-and-modes">Rule 5: Quality gates and modes</a></li><li><a href="#device-realities">Device realities</a></li><li><a href="#testing-it">Testing it</a></li><li><a href="#summary">Summary</a></li>
+        <li><a href="#fixed-slots-instead-of-free-form-times">Fixed slots instead of free-form times</a></li><li><a href="#the-tick-loop">The tick loop</a></li><li><a href="#rule-1-claim-before-you-upload">Rule 1: Claim before you upload</a></li><li><a href="#rule-2-overdue-is-not-post-now">Rule 2: Overdue is not &ldquo;post now&rdquo;</a></li><li><a href="#rule-3-restarts-must-never-cause-duplicates">Rule 3: Restarts must never cause duplicates</a></li><li><a href="#rule-4-published-means-confirmed">Rule 4: Published means confirmed</a></li><li><a href="#rule-5-quality-gates-and-modes">Rule 5: Quality gates and modes</a></li><li><a href="#device-realities">Device realities</a></li><li><a href="#testing-it">Testing it</a></li><li><a href="#summary">Summary</a></li>
       </ol></details>
       
       <div class="side-cta"><b>Meet the News AI Engine</b>Script, voiceover, editing and captions in one workflow.<br><a href="/engine/">Explore the Engine</a></div>
@@ -223,7 +223,7 @@ WHERE id=? AND status='SCHEDULED' AND publish_id='';
 <footer class="foot">
   <div class="wrap foot-grid">
     <div>
-      <a class="logo" href="/"><img src="/static/img/logo.svg?v=f5073add16" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
+      <a class="logo" href="/"><img src="/static/img/logo.svg?v=a767fa22ed" alt="" width="34" height="34"><span>News <span class="ai">AI</span> Engine</span></a>
       <p>Make news videos with AI, the smart way. Clear, honest guides for creators who want to make news and explainer videos with AI, from the team that builds the News AI Engine.</p>
       <a class="btn sm" href="/engine/">Explore the Engine</a>
     </div>
@@ -248,6 +248,6 @@ WHERE id=? AND status='SCHEDULED' AND publish_id='';
   <p>We use cookies for basic site features and, where enabled, advertising by Google. Read our <a href="/privacy-policy/">Privacy Policy</a> and <a href="/cookie-policy/">Cookie Policy</a>.</p>
   <button type="button" id="cookie-ok">Got it</button>
 </div>
-<script src="/static/js/site.js?v=f5073add16" defer></script>
+<script src="/static/js/site.js?v=a767fa22ed" defer></script>
 </body>
 </html>

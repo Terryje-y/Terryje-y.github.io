@@ -271,3 +271,11 @@ p { margin: 0 0 1em; }
 @media (min-width: 861px) { .feature { grid-template-columns: 1.25fr 1fr; } .feature img { object-fit: cover; object-position: left center; } }
 @media (max-width: 560px) { .topics.full { grid-template-columns: 1fr; } .topics.full .topic span { display: block; } }
 [hidden] { display: none !important; }
+/* never let wide tables / code widen the page on phones */
+@media (max-width: 1060px) { .post-layout { grid-template-columns: minmax(0, 1fr); } }
+.post-layout > *, .prose, .prose > * { min-width: 0; max-width: 100%; }
+.prose pre, .table-wrap { max-width: 100%; overflow-x: auto; }
+body { overflow-x: clip; }
+.prose table { min-width: 620px; }
+.prose th, .prose td { overflow-wrap: normal; word-break: normal; }
+.prose td code { white-space: nowrap; }
