@@ -237,6 +237,70 @@ Return JSON with keys:
     let acc = 0;
     return words.map((w) => { const s = lead + (acc / total) * span; acc += weight(w); return {w, s, e: lead + (acc / total) * span}; });
   }
+  // Word timing from the real voiceover: find the speech pauses in the audio and pin the script's punctuation
+  // to them (monotonic dynamic-programming match), then spread words inside each phrase by syllable weight.
+  // Errors reset at every pause instead of accumulating across the video.
+  const syll = (w) => { const s = w.toLowerCase().replace(/[^a-z0-9]/g, ""); if (/^\d+$/.test(s)) return Math.max(2, s.length);
+    return Math.max(1, (s.match(/[aeiouy]+/g) || []).length - (/[^aeiou]e$/.test(s) ? 1 : 0)); };
+  const wWeight = (w) => syll(w) + 0.6;
+  function speechPauses(samples, rate) {
+    const hop = Math.round(rate * 0.01), n = Math.floor(samples.length / hop), db = new Float32Array(n);
+    for (let i = 0; i < n; i++) { let e = 0; for (let k = i * hop, end = k + hop; k < end; k++) e += samples[k] * samples[k]; db[i] = 10 * Math.log10(e / hop + 1e-10); }
+    const sorted = Array.from(db).sort((a, b) => a - b), floor = sorted[Math.floor(n * 0.1)], loud = sorted[Math.floor(n * 0.95)];
+    const thr = floor + Math.max(6, (loud - floor) * 0.28);
+    const on = Array.from(db, (v) => v > thr);
+    let first = on.indexOf(true), last = on.lastIndexOf(true);
+    if (first < 0) return null;
+    const pauses = [];
+    for (let i = first; i <= last;) {
+      if (on[i]) { i++; continue; }
+      let j = i; while (j <= last && !on[j]) j++;
+      if ((j - i) * 0.01 >= 0.11) pauses.push({start: i * 0.01, end: j * 0.01});
+      i = j;
+    }
+    return {speechStart: first * 0.01, speechEnd: (last + 1) * 0.01, pauses};
+  }
+  function alignWords(script, samples, rate) {
+    const words = script.split(/\s+/).filter(Boolean);
+    const sp = speechPauses(samples, rate);
+    if (!words.length || !sp) return null;
+    const total = words.reduce((a, w) => a + wWeight(w), 0), span = sp.speechEnd - sp.speechStart;
+    // candidate breaks after punctuated words, with their proportional expected time
+    const breaks = []; let acc = 0;
+    words.forEach((w, i) => { acc += wWeight(w); if (i < words.length - 1) {
+      // every word boundary can take a pause (breaths); punctuation boundaries are preferred
+      const punct = /[.!?;:,—–-]["'”’)]?$/.test(w);
+      if (punct) breaks.push({i, exp: sp.speechStart + span * acc / total, strong: /[.!?]["'”’)]?$/.test(w), punct}); } });
+    const P = sp.pauses, B = breaks.length, INF = 1e9;
+    const skipB = (b) => b.strong ? 2.5 : b.punct ? 0.8 : 0, skipP = (p) => Math.min(1.2, 0.25 + (p.end - p.start));
+    const dp = Array.from({length: B + 1}, () => new Float64Array(P.length + 1).fill(INF)), how = Array.from({length: B + 1}, () => new Int8Array(P.length + 1));
+    dp[0][0] = 0;
+    for (let i = 0; i <= B; i++) for (let j = 0; j <= P.length; j++) {
+      const cur = dp[i][j]; if (cur >= INF) continue;
+      if (i < B && j < P.length) { const mid = (P[j].start + P[j].end) / 2, d = Math.abs(breaks[i].exp - mid);
+        const c = cur + d * d / 4 + (breaks[i].strong && P[j].end - P[j].start < 0.2 ? 0.3 : 0) + (breaks[i].punct ? 0 : 0.45); if (c < dp[i + 1][j + 1]) { dp[i + 1][j + 1] = c; how[i + 1][j + 1] = 1; } }
+      if (i < B && cur + skipB(breaks[i]) < dp[i + 1][j]) { dp[i + 1][j] = cur + skipB(breaks[i]); how[i + 1][j] = 2; }
+      if (j < P.length && cur + skipP(P[j]) < dp[i][j + 1]) { dp[i][j + 1] = cur + skipP(P[j]); how[i][j + 1] = 3; }
+    }
+    const anchors = [{word: -1, t: sp.speechStart}];       // "word -1 ends at speech start"
+    for (let i = B, j = P.length; i > 0 || j > 0;) {
+      const h = how[i][j];
+      if (h === 1) { anchors.push({word: breaks[i - 1].i, t: P[j - 1].start, next: P[j - 1].end}); i--; j--; }
+      else if (h === 2) i--; else j--;
+    }
+    anchors.push({word: words.length - 1, t: sp.speechEnd});
+    anchors.sort((a, b) => a.word - b.word);
+    const out = new Array(words.length);
+    for (let k = 0; k < anchors.length - 1; k++) {
+      const a = anchors[k], b = anchors[k + 1];
+      const from = a.word + 1, to = b.word, t0 = a.next ?? a.t, t1 = b.t;
+      const wsum = words.slice(from, to + 1).reduce((s, w) => s + wWeight(w), 0) || 1;
+      let t = t0;
+      for (let i = from; i <= to; i++) { const d = (t1 - t0) * wWeight(words[i]) / wsum; out[i] = {w: words[i], s: t, e: t + d}; t += d; }
+    }
+    return {words: out.filter(Boolean).length === words.length ? out : null, pauses: P.length, matched: anchors.length - 2};
+  }
+
   function captionGroups(tl) {
     const groups = []; let cur = [];
     tl.forEach((x, i) => { cur.push(i); if (cur.length >= 4 || /[.!?,;:]$/.test(x.w)) { groups.push(cur); cur = []; } });
@@ -279,7 +343,10 @@ Return JSON with keys:
     const H = +$("quality").value === 1080 ? 1920 : 1280, W = H * 9 / 16, u = W / 720;
     const cv = $("canvas"); cv.width = W; cv.height = H; const c = cv.getContext("2d");
     const style = $("vidStyle").value, brand = $("brand").value.trim(), duration = audio.buffer.duration + 0.4;
-    const tl = timeline(script, audio.buffer.duration), groups = captionGroups(tl), points = pointTimes(tl, audio.buffer.duration);
+    let tl = null;
+    try { tl = alignWords(script, audio.buffer.getChannelData(0), audio.buffer.sampleRate)?.words || null; } catch (e) { tl = null; }
+    if (!tl) tl = timeline(script, audio.buffer.duration);   // fallback: estimate from word length
+    const groups = captionGroups(tl), points = pointTimes(tl, audio.buffer.duration);
     const seg = 3;
     for (const m of media) if (m.kind === "video") m.el.pause();
     let active = new Set();
